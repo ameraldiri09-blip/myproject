@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المرجع الهندسي السوري | دليلك من السنة التحضيرية حتى سوق العمل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    :root{
+        --navy:#0a2540;
+        --navy-2:#103a5e;
+        --blue:#1668b4;
+        --blue-light:#e8f2fa;
+        --gold:#d9a441;
+        --gold-light:#fdf3e0;
+        --bg:#f7f9fc;
+        --card:#ffffff;
+        --text:#22303f;
+        --muted:#64748b;
+        --border:#e6ecf2;
+        --radius:16px;
+        --shadow:0 4px 20px rgba(10,37,64,.05);
+        --shadow-hover:0 10px 30px rgba(10,37,64,.09);
+    }
+    *{box-sizing:border-box; margin:0; padding:0;}
+    html{scroll-behavior:smooth;}
+    body{
+        font-family:"Tajawal","Cairo",Tahoma,sans-serif;
+        background:var(--bg); color:var(--text); line-height:1.8;
+        -webkit-font-smoothing:antialiased;
+        overflow-x: hidden;
+    }
+    h1,h2,h3,h4{font-family:"Cairo","Tajawal",sans-serif;}
+    a{text-decoration:none; color:inherit;}
+    img,svg{display:block;}
+
+    /* ============ الهيدر ============ */
+    header{
+        position:fixed; top:0; right:0; left:0; z-index:200;
+        background:rgba(10,37,64,.9); backdrop-filter:blur(12px);
+        border-bottom:1px solid rgba(255,255,255,.08);
+        transition:background .3s;
+    }
+    .nav{
+        max-width:1200px; margin:auto; padding:0 20px; height:70px;
+        display:flex; align-items:center; justify-content:space-between; gap:15px;
+    }
+    .brand{display:flex; align-items:center; gap:10px;}
+    .logo-badge{
+        width:42px; height:42px; border-radius:11px; flex-shrink:0;
+        background:linear-gradient(140deg, var(--gold), #b9832a);
+        display:flex; align-items:center; justify-content:center;
+        box-shadow:0 4px 12px rgba(217,164,65,.35);
+    }
+    .brand-text{display:flex; flex-direction:column; line-height:1.2;}
+    .brand-text b{
+        font-family:"Cairo"; font-size:1.05rem; color:#fff; font-weight:800;
+        margin-bottom: 4px;
+    }
+    .brand-text small{color:#9db8ce; font-size:.68rem; font-weight:500; letter-spacing:.8px;}
+    nav ul{display:flex; list-style:none; gap:4px; align-items:center;}
+    nav a{
+        color:#c3d6e6; font-size:.9rem; font-weight:500; padding:8px 14px;
+        border-radius:8px; transition:all .2s;
+    }
+    nav a:hover{color:#fff; background:rgba(255,255,255,.08);}
+    .nav-cta{
+        background:linear-gradient(135deg, var(--gold), #c9922f);
+        color:#1d1503 !important; font-weight:700 !important;
+    }
+
+    /* ============ الواجهة الرئيسية ============ */
+    .hero{
+        min-height:90vh; display:flex; align-items:center; justify-content:center;
+        position:relative; overflow:hidden; padding:120px 20px 80px;
+        background:
+            radial-gradient(ellipse 80% 60% at 70% -10%, rgba(22,104,180,.4), transparent 60%),
+            linear-gradient(160deg, #081c33 0%, var(--navy) 45%, #0d3054 100%);
+    }
+    .hero-grid{
+        position:absolute; inset:0; opacity:.3; pointer-events:none;
+        background-image:
+            linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+        background-size:45px 45px;
+    }
+    .hero-inner{max-width:850px; text-align:center; position:relative; z-index:2;}
+    .hero-kicker{
+        display:inline-flex; align-items:center; gap:8px;
+        background:rgba(217,164,65,.12); border:1px solid rgba(217,164,65,.3);
+        color:#f0c877; border-radius:30px; padding:6px 16px; font-size:.82rem; font-weight:700;
+        margin-bottom:20px;
+    }
+    .hero-kicker::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--gold);}
+    .hero h1{
+        font-size:clamp(1.8rem, 4vw, 3.2rem); color:#fff; font-weight:900;
+        line-height:1.4; margin-bottom:18px;
+    }
+    .hero h1 .grad{
+        background:linear-gradient(120deg, #f5cf7e, var(--gold) 45%, #f0e2b8);
+        -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .hero p{
+        color:#b8ccdd; font-size:clamp(0.95rem, 1.8vw, 1.1rem); max-width:650px;
+        margin:0 auto 32px; line-height:1.9;
+    }
+    .hero-actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:45px;}
+    .btn{
+        display:inline-flex; align-items:center; gap:8px; padding:13px 28px;
+        border-radius:12px; font-family:"Cairo"; font-weight:700; font-size:.95rem;
+        transition:transform .2s, box-shadow .2s; cursor:pointer; border:none;
+    }
+    .btn-gold{
+        background:linear-gradient(135deg, #e8b655, var(--gold));
+        color:#241a05; box-shadow:0 6px 20px rgba(217,164,65,.35);
+    }
+    .btn-gold:hover{transform:translateY(-2px);}
+    .btn-ghost{
+        background:rgba(255,255,255,.07); color:#e6eef5;
+        border:1px solid rgba(255,255,255,.2);
+    }
+    .btn-ghost:hover{background:rgba(255,255,255,.12); transform:translateY(-2px);}
+    .hero-stats{
+        display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:10px;
+        border:1px solid rgba(255,255,255,.1); border-radius:16px;
+        background:rgba(255,255,255,.04); backdrop-filter:blur(6px);
+        padding:15px;
+    }
+    .stat{padding:10px; text-align:center;}
+    .stat b{display:block; font-family:"Cairo"; font-size:1.4rem; color:var(--gold); font-weight:800;}
+    .stat span{color:#9db8ce; font-size:.78rem;}
+
+    /* ============ الأقسام العامة ============ */
+    section{padding:70px 20px;}
+    .container{max-width:1140px; margin:auto;}
+    .sec-head{text-align:center; max-width:680px; margin:0 auto 40px;}
+    .sec-eyebrow{
+        display:inline-block; color:var(--blue); font-weight:700; font-size:.8rem;
+        letter-spacing:1.5px; margin-bottom:10px; text-transform:uppercase;
+        background:var(--blue-light); border-radius:20px; padding:4px 14px;
+    }
+    .sec-head h2{font-size:clamp(1.5rem, 3vw, 2.1rem); color:var(--navy); font-weight:800; margin-bottom:10px;}
+    .sec-head p{color:var(--muted); font-size:.98rem;}
+
+    /* ============ الرؤية ============ */
+    .vision{
+        background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+        padding:32px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+        display:grid; grid-template-columns:auto 1fr; gap:20px; align-items:center;
+    }
+    .vision::before{
+        content:""; position:absolute; inset-inline-start:0; top:0; bottom:0; width:5px;
+        background:linear-gradient(180deg, var(--gold), #b9832a);
+    }
+    .vision-icon{
+        width:65px; height:65px; border-radius:16px;
+        background:linear-gradient(140deg, var(--gold-light), #f7e5c0);
+        display:flex; align-items:center; justify-content:center;
+        border:1px solid #f0d9a8; flex-shrink: 0;
+    }
+    .vision h3{color:var(--navy); font-size:1.25rem; margin-bottom:8px; font-weight:800;}
+    .vision p{color:var(--muted); font-size:.95rem;}
+
+    /* ============ البطاقات ============ */
+    .cards{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:20px;}
+    .card{
+        background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+        padding:24px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+        transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .card:hover{transform:translateY(-4px); box-shadow:var(--shadow-hover);}
+    .card-icon{
+        width:50px; height:50px; border-radius:14px; margin-bottom:15px;
+        background:linear-gradient(140deg, var(--blue), #0d4d85);
+        display:flex; align-items:center; justify-content:center;
+    }
+    .card h3{color:var(--navy); margin-bottom:6px; font-size:1.1rem; font-weight:800;}
+    
+    .specialty-line {
+        display: inline-block;
+        background: var(--blue-light);
+        color: var(--blue);
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        border: 1px solid #d3e5f5;
+    }
+
+    .card p{color:var(--muted); font-size:.9rem; margin-bottom:12px;}
+    .card ul{list-style:none; margin-bottom:12px;}
+    .card ul li{
+        padding-inline-start:20px; position:relative; font-size:.88rem;
+        color:var(--text); margin-bottom:6px;
+    }
+    .card ul li::before{
+        content:""; position:absolute; inset-inline-start:2px; top:9px;
+        width:6px; height:6px; border-radius:2px; background:var(--gold);
+    }
+    .tag{
+        display:inline-block; background:var(--blue-light); color:var(--blue);
+        border:1px solid #d3e5f5; border-radius:15px; padding:2px 10px;
+        font-size:.75rem; font-weight:700; margin:2px 2px;
+    }
+    .card-flag{
+        position:absolute; top:16px; inset-inline-end:16px;
+        background:linear-gradient(135deg, #e8b655, var(--gold)); color:#241a05;
+        font-size:.68rem; font-weight:800; font-family:"Cairo";
+        padding:3px 10px; border-radius:15px;
+    }
+
+    /* ============ كبسولات الجامعات الخاصة ============ */
+    .uni-pills {
+        display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px;
+    }
+    .uni-pill {
+        display: inline-flex; align-items: center; background: var(--bg);
+        border: 1px solid var(--border); color: var(--navy);
+        padding: 8px 18px; border-radius: 30px; font-size: 0.92rem;
+        font-weight: 700; transition: all 0.2s ease;
+    }
+    .uni-pill:hover {
+        background: var(--blue-light); border-color: #cfe3f3;
+        color: var(--blue); transform: translateY(-3px); box-shadow: 0 4px 12px rgba(22,104,180,.1);
+    }
+
+    /* ============ الكتل الفرعية ============ */
+    .block{
+        background:var(--card); border:1px solid var(--border); border-radius:20px;
+        padding:28px; margin-bottom:28px; box-shadow:var(--shadow);
+    }
+    .block-head{
+        display:flex; align-items:center; gap:12px; margin-bottom:20px;
+        padding-bottom:14px; border-bottom:1px solid var(--border);
+    }
+    .block-head .bh-icon{
+        width:44px; height:44px; border-radius:12px; flex-shrink:0;
+        background:linear-gradient(140deg, var(--navy), var(--navy-2));
+        display:flex; align-items:center; justify-content:center;
+    }
+    .block-head h3{color:var(--navy); font-size:1.2rem; font-weight:800;}
+    .block-head small{display:block; color:var(--muted); font-size:.8rem; font-weight:400; margin-top:2px;}
+
+    /* ============ صناديق النصائح ============ */
+    .tip{
+        background:linear-gradient(135deg, #fffaf0, var(--gold-light));
+        border:1px solid #f0dcae; border-inline-start:4px solid var(--gold);
+        border-radius:12px; padding:16px 20px; margin-top:20px;
+        color:#6d5420; font-size:.91rem;
+    }
+    .tip b{color:#4d3b10;}
+    .tip-blue{
+        background:linear-gradient(135deg, #f2f8fd, var(--blue-light));
+        border-color:#cfe3f3; border-inline-start-color:var(--blue); color:#33506b;
+    }
+    .tip-blue b{color:#173a58;}
+
+    /* ============ الخطوات ============ */
+    .steps{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:18px; counter-reset:step;}
+    .step{
+        background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+        padding:24px 20px; box-shadow:var(--shadow); position:relative; counter-increment:step;
+    }
+    .step::before{
+        content:counter(step, decimal-leading-zero);
+        position:absolute; top:-14px; inset-inline-start:18px;
+        font-family:"Cairo"; font-size:2rem; font-weight:900;
+        color:var(--gold); opacity:.3; line-height:1;
+    }
+    .step h3{color:var(--navy); font-size:1.02rem; margin-bottom:8px; font-weight:800; padding-inline-start:40px;}
+    .step p{color:var(--muted); font-size:.88rem;}
+
+    /* ============ التذييل ============ */
+    footer{
+        background:linear-gradient(160deg, #081c33, var(--navy));
+        color:#a9bfd2; padding:50px 20px 25px; position:relative;
+    }
+    .foot-inner{max-width:1140px; margin:auto; display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:30px; margin-bottom:35px;}
+    .foot-brand{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+    .foot-brand b{font-family:"Cairo"; color:#fff; font-size:1.15rem; font-weight:800;}
+    .foot-col h4{color:#fff; font-size:.95rem; margin-bottom:14px; font-weight:700;}
+    .foot-col ul{list-style:none;}
+    .foot-col li{margin-bottom:8px;}
+    .foot-col a{color:#93a9bd; font-size:.88rem; transition:color .2s;}
+    .foot-col a:hover{color:var(--gold);}
+    .foot-desc{font-size:.88rem; line-height:1.8; max-width:320px;}
+    .foot-bottom{
+        max-width:1140px; margin:auto; padding-top:20px;
+        border-top:1px solid rgba(255,255,255,.08);
+        display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+        font-size:.82rem; color:#7f96ab;
+    }
+
+    @media (max-width:768px){
+        .foot-inner{grid-template-columns:1fr; gap:25px;}
+        .vision{grid-template-columns:1fr; padding:24px;}
+        nav ul{display:none;}
+        .hero{padding-top:100px; min-height:auto;}
+    }
+</style>
+</head>
+<body>
+
+<!-- ================= الهيدر ================= -->
+<header>
+    <div class="nav">
+        <a class="brand" href="#home">
+            <div class="logo-badge">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1503" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+            </div>
+            <div class="brand-text"><b>المرجع الهندسي السوري</b><small>SYRIAN ENGINEERING REFERENCE</small></div>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#majors">التخصصات</a></li>
+                <li><a href="#universities">الجامعات</a></li>
+                <li><a href="#tools">الأدوات</a></li>
+                <li><a href="#career">سوق العمل</a></li>
+                <li><a href="#majors" class="nav-cta">ابدأ رحلتك</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- ================= الواجهة الرئيسية ================= -->
+<section id="home" class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-inner">
+        <div class="hero-kicker">منصة عربية شاملة لطلاب الهندسة في سوريا</div>
+        <h1>رحلتك الهندسية تبدأ هنا..<br>من <span class="grad">التحضيرية</span> حتى <span class="grad">سوق العمل</span></h1>
+        <p>
+            دليلك الموثوق الذي يرافقك خطوة بخطوة: نساعدك على اختيار تخصصك بذكاء،
+            نعرّفك بجامعاتك المتاحة، نوفر لك الأدوات والمصادر الصحيحة للتعلّم،
+            ونرسم لك خارطة مهارات عملية تناسب واقع السوق السوري والعمل الحر العالمي.
+        </p>
+        <div class="hero-actions">
+            <a href="#majors" class="btn btn-gold">استكشف التخصصات
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </a>
+            <a href="#universities" class="btn btn-ghost">دليل الجامعات</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat"><b>+10</b><span>تخصصات</span></div>
+            <div class="stat"><b>+15</b><span>جامعة</span></div>
+            <div class="stat"><b>+25</b><span>أداة ومرجع</span></div>
+            <div class="stat"><b>100%</b><span>مجاني</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= رؤية الموقع ================= -->
+<section style="padding: 40px 20px;">
+    <div class="container">
+        <div class="vision">
+            <div class="vision-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#b9832a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.4 1 2.3h6c0-.9.4-1.8 1-2.3A7 7 0 0 0 12 2z"/>
+                </svg>
+            </div>
+            <div>
+                <h3>لماذا «المرجع الهندسي السوري»؟</h3>
+                <p>
+                    لأن الطالب السوري يستحق مرجعاً واحداً يجمع له ما تفرّق في عشرات المصادر:
+                    فهم التخصصات الحقيقية قبل الاختيار، معرفة خياراته الجامعية، الوصول إلى الأدوات
+                    الصحيحة، وخطة مهارات واضحة تختصر عليه سنوات من التجربة والخطأ.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= دليل التخصصات ================= -->
+<section id="majors" style="background:#fff;">
+    <div class="container">
+        <div class="sec-head">
+            <span class="sec-eyebrow">دليل التخصصات</span>
+            <h2>اختر تخصصك بمعرفة.. لا بالمصادفة</h2>
+            <p>تعرّف على حقيقة كل تخصص: ماذا تدرس؟ إلى أين يقودك؟ وما فرصه في السوق السوري والعالمي؟</p>
+        </div>
+
+        <!-- الهندسة المعلوماتية -->
+        <div class="block">
+            <div class="block-head">
+                <div class="bh-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8b655" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4M7 8l2 2 4-4"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>الهندسة المعلوماتية</h3>
+                    <small>تخصص المستقبل — أسرع فروع الهندسة نموّاً</small>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-flag">الأكثر طلباً</div>
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a4 4 0 0 1 4 4c1.5.5 2.5 2 2.5 3.5S18 12 18 13a4 4 0 1 1-4 5c-.5 1.5-2 2.5-3.5 2.5S8 19.5 7 19a4 4 0 1 1-2-5.5C4.5 12.5 4 11 4.5 9.5S6 6.5 7 6a4 4 0 0 1 5-4z"/>
+                        </svg>
+                    </div>
+                    <h3>الذكاء الاصطناعي وتعلّم الآلة</h3>
+                    <div class="specialty-line">التخصص: هندسة الذكاء الاصطناعي والبيانات</div>
+                    <p>تخصص يجمع الرياضيات والبرمجة وبناء النماذج التي تتعلّم من البيانات.</p>
+                    <ul>
+                        <li>تعلّم الآلة والتعلّم العميق</li>
+                        <li>معالجة اللغات الطبيعية ورؤية الحاسوب</li>
+                        <li>علم البيانات والتحليل الإحصائي</li>
+                    </ul>
+                    <span class="tag">Python</span><span class="tag">رياضيات متقدمة</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/>
+                        </svg>
+                    </div>
+                    <h3>هندسة البرمجيات</h3>
+                    <div class="specialty-line">التخصص: هندسة ونظم البرمجيات</div>
+                    <p>كيف تُبنى الأنظمة البرمجية الكبيرة بجودة واحترافية عالية.</p>
+                    <ul>
+                        <li>تحليل وتصميم الأنظمة</li>
+                        <li>قواعد البيانات وهياكل البيانات والخوارزميات</li>
+                        <li>هندسة الويب وتطوير الخدمات</li>
+                    </ul>
+                    <span class="tag">Java</span><span class="tag">C++</span><span class="tag">Web</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18.5h2"/>
+                        </svg>
+                    </div>
+                    <h3>تطوير تطبيقات الجوال</h3>
+                    <div class="specialty-line">التخصص: تطوير برمجيات الأجهزة الذكية</div>
+                    <p>مسار عملي مطلوب بقوة في سوق العمل الحر: بناء تطبيقات أندرويد وiOS.</p>
+                    <ul>
+                        <li>تطوير تطبيقات أندرويد</li>
+                        <li>تطبيقات Flutter متعددة المنصات</li>
+                        <li>النشر على المتاجر وبناء معرض الأعمال</li>
+                    </ul>
+                    <span class="tag">Kotlin</span><span class="tag">Flutter</span><span class="tag">Freelance</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- الفروع العريقة -->
+        <div class="block">
+            <div class="block-head">
+                <div class="bh-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8b655" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>الفروع الهندسية العريقة</h3>
+                    <small>تخصصات راسخة تشكّل عمود البنية التحتية والصناعة</small>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 21V9l8-6 8 6v12M4 21h16M9 21v-5h6v5"/>
+                        </svg>
+                    </div>
+                    <h3>الهندسة المدنية</h3>
+                    <div class="specialty-line">التخصص: الهندسة المدنية (عام / إنشائي)</div>
+                    <p>عمود البنية التحتية: الإنشاءات، الطرق، الجسور، والمشاريع الكبرى.</p>
+                    <ul>
+                        <li>الخرسانة المسلحة والمنشآت المعدنية</li>
+                        <li>الطرق والجسور والمساحة</li>
+                        <li>إدارة المشاريع والتنفيذ</li>
+                    </ul>
+                    <span class="tag">AutoCAD</span><span class="tag">SAP2000</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 21h18M6 21V10M18 21V10M6 10h12M9 10V6a3 3 0 0 1 6 0v4"/>
+                        </svg>
+                    </div>
+                    <h3>الهندسة المعمارية</h3>
+                    <div class="specialty-line">التخصص: الهندسة المعمارية والتصميم</div>
+                    <p>فن وعلم تصميم المباني والفراغات؛ يجمع الإبداع بالجانب الإنشائي والبيئي.</p>
+                    <ul>
+                        <li>التصميم المعماري والنظريات</li>
+                        <li>الرسم المعماري ونمذجة BIM</li>
+                        <li>التصميم الداخلي</li>
+                    </ul>
+                    <span class="tag">Revit</span><span class="tag">3ds Max</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5L19 19M19 5l-2.5 2.5M7.5 16.5L5 19"/>
+                        </svg>
+                    </div>
+                    <h3>الهندسة الميكانيكية</h3>
+                    <div class="specialty-line">التخصص: الهندسة الميكانيكية وقوى الطيران</div>
+                    <p>من الآلات والسيارات إلى التدفئة والتكييف والطاقة.</p>
+                    <ul>
+                        <li>ميكانيك الآلات والتصميم</li>
+                        <li>التدفئة والتكييف والتهوية (HVAC)</li>
+                        <li>الطاقة المتجددة</li>
+                    </ul>
+                    <span class="tag">SolidWorks</span><span class="tag">MATLAB</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
+                        </svg>
+                    </div>
+                    <h3>الهندسة الكهربائية</h3>
+                    <div class="specialty-line">التخصص: الهندسة الكهربائية والإلكترونيات</div>
+                    <p>كهرباء القوى، الإلكترونيات، الاتصالات، والتحكم الآلي.</p>
+                    <ul>
+                        <li>أنظمة القدرة الكهربائية والشبكات</li>
+                        <li>الإلكترونيات والطاقة الشمسية</li>
+                        <li>الاتصالات والأنظمة المدمجة</li>
+                    </ul>
+                    <span class="tag">MATLAB</span>
+                </div>
+            </div>
+            <div class="tip">
+                <b>🔍 نصيحة الاختيار:</b> لا تختر تخصصاً بناءً على اسمه فقط. اسأل طلاباً متقدمين واطّلع على خطة المنهاج قبل اتخاذ قرارك النهائي.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= دليل الجامعات ================= -->
+<section id="universities">
+    <div class="container">
+        <div class="sec-head">
+            <span class="sec-eyebrow">دليل الجامعات</span>
+            <h2>خياراتك الجامعية في سوريا</h2>
+            <p>لمحة شاملة عن الكليات الهندسية في الجامعات الحكومية والخاصة.</p>
+        </div>
+
+        <!-- الجامعات الحكومية -->
+        <div class="block">
+            <div class="block-head">
+                <div class="bh-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8b655" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5M22 10v6"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>الجامعات الحكومية</h3>
+                    <small>أعرق الكليات الهندسية وأكثرها اعترافاً</small>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <h3>جامعة دمشق</h3>
+                    <p>أعرق جامعات سوريا وتضم كليات هندسية رائدة:</p>
+                    <ul>
+                        <li>كلية الهندسة المعلوماتية</li>
+                        <li>كلية الهندسة المعمارية</li>
+                        <li>الهندسة المدنية والميكانيكية والكهربائية</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>جامعة حلب</h3>
+                    <p>ثاني أكبر جامعة سورية بكليات هندسية متنوعة:</p>
+                    <ul>
+                        <li>الهندسة المعلوماتية والمعمارية</li>
+                        <li>المدنية والميكانيكية والكهربائية</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>جامعات أخرى</h3>
+                    <p>جامعة تشرين، جامعة البعث، جامعة حماة، وجامعة طرطوس.</p>
+                    <ul>
+                        <li>تضم معظم الفروع الهندسية الأساسية</li>
+                        <li>تعتمد مفاضلات وزارة التعليم العالي</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- الجامعات الخاصة -->
+        <div class="block">
+            <div class="block-head">
+                <div class="bh-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8b655" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 3h12l4 6-10 12L2 9l4-6zM2 9h20M12 21L8 9l4-6 4 6-4 12"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>الجامعات الخاصة</h3>
+                    <small>خيارات مرنة وبيئة أكاديمية متطورة</small>
+                </div>
+            </div>
+            
+            <div class="card" style="width:100%;">
+                <h3 style="margin-bottom: 12px; font-size: 1.2rem;">شبكة الجامعات الخاصة في سوريا</h3>
+                <p style="margin-bottom: 20px;">تضم سوريا نخبة من الجامعات الخاصة التي توفر تخصصات هندسية رائدة وتتميز ببيئة تعليمية حديثة ومرونة تناسب مختلف ظروف الطلاب. من أبرز هذه الجامعات:</p>
+                
+                <div class="uni-pills">
+                    <span class="uni-pill">جامعة قاسيون</span>
+                    <span class="uni-pill">الجامعة العربية الدولية</span>
+                    <span class="uni-pill">الجامعة الدولية العربية</span>
+                    <span class="uni-pill">الجامعة البريطانية في دمشق</span>
+                    <span class="uni-pill">جامعة الجزيرة</span>
+                    <span class="uni-pill">جامعة الاتحاد</span>
+                    <span class="uni-pill">جامعة القلمون</span>
+                    <span class="uni-pill">جامعة الشمال</span>
+                    <span class="uni-pill">جامعة ايبلا</span>
+                    <span class="uni-pill">جامعة الشام</span>
+                    <span class="uni-pill" style="background: transparent; border: 1px dashed var(--muted); color: var(--muted); box-shadow: none;">وغيرها من الجامعات الخاصة...</span>
+                </div>
+            </div>
+
+            <div class="tip tip-blue">
+                <b>⚠️ تنبيه:</b> تحقّق دائماً من اعتراف وزارة التعليم العالي بالتخصص والدرجة العلمية ومعدلات القبول السنوية قبل التسجيل في أي جامعة خاصة.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ركن المراجع والأدوات ================= -->
+<section id="tools" style="background:#fff;">
+    <div class="container">
+        <div class="sec-head">
+            <span class="sec-eyebrow">المراجع والأدوات</span>
+            <h2>عدّة الطالب الهندسي</h2>
+            <p>ترشيحات عملية لأهم الأدوات والمصادر البرمجية والهندسية.</p>
+        </div>
+
+        <div class="block">
+            <div class="block-head">
+                <div class="bh-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8b655" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 6l-5 6 5 6M16 6l5 6-5 6"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>لطلاب الهندسة المعلوماتية</h3>
+                    <small>بيئات العمل واللغات البرمجية</small>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <h3>بيئات العمل (IDEs)</h3>
+                    <ul>
+                        <li><strong>VS Code</strong> — الخيار الأسرع والأخف</li>
+                        <li><strong>Android Studio</strong> — لتطبيقات أندرويد</li>
+                        <li><strong>PyCharm</strong> — لمشاريع بايثون</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>اللغات البرمجية</h3>
+                    <ul>
+                        <li><strong>C++</strong> — أساس الخوارزميات والجامعة</li>
+                        <li><strong>Python</strong> — للذكاء الاصطناعي والتحليل</li>
+                        <li><strong>Kotlin</strong> — لتطبيقات أندرويد الحديثة</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>مصادر التعلّم</h3>
+                    <ul>
+                        <li><strong>CS50</strong> — أقوى مدخل لعلوم الحاسوب</li>
+                        <li>منصة حسوب وأكاديمية إلزيرو</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="block-head">
+                <div class="bh-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8b655" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l7.6 7.6"/><circle cx="11" cy="11" r="2"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>لطلاب العمارة والمدني</h3>
+                    <small>التصميم والتحليل الإنشائي</small>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <h3>التصميم والرسم</h3>
+                    <ul>
+                        <li><strong>AutoCAD</strong> — للرسم ثنائي الأبعاد</li>
+                        <li><strong>Revit</strong> — لنظام النمذجة الحديث BIM</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>التحليل الإنشائي</h3>
+                    <ul>
+                        <li><strong>SAP2000</strong> و <strong>ETABS</strong> — لتحليل المنشآت</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>الإخراج المعماري</h3>
+                    <ul>
+                        <li><strong>Lumion</strong> — لتصيير الفيديوهات الواقعية</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= نصائح سوق العمل ================= -->
+<section id="career">
+    <div class="container">
+        <div class="sec-head">
+            <span class="sec-eyebrow">سوق العمل</span>
+            <h2>لا تنتظر التخرج.. ابدأ اليوم</h2>
+            <p>الطالب الذي يبني مهاراته مبكراً يضمن لنفسه فرصة حقيقية ومتميزة.</p>
+        </div>
+
+        <div class="steps" style="margin-bottom:25px;">
+            <div class="step">
+                <h3>اللغة الإنجليزية</h3>
+                <p>مفتاحك الأساسي للوصول إلى أحدث المصادر العلمية والتقنية عالمياً.</p>
+            </div>
+            <div class="step">
+                <h3>التطبيق العملي</h3>
+                <p>ابنِ مشاريع حقيقية وضمّنها في معرض أعمالك الشخصي.</p>
+            </div>
+            <div class="step">
+                <h3>العمل الحر</h3>
+                <p>جرّب منصات مثل مستقل وخمسات لكسب أول خبرة عملية.</p>
+            </div>
+            <div class="step">
+                <h3>الملف المهني</h3>
+                <p>اجعل حسابك على LinkedIn يعكس مهاراتك ومشاريعك المنجزة.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= التذييل ================= -->
+<footer>
+    <div class="foot-inner">
+        <div>
+            <div class="foot-brand">
+                <div class="logo-badge">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1503" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                </div>
+                <b>المرجع الهندسي السوري</b>
+            </div>
+            <p class="foot-desc">
+                دليلك الموثوق في رحلتك الهندسية — من مقاعد الدراسة إلى سوق العمل.
+            </p>
+        </div>
+        <div class="foot-col">
+            <h4>أقسام الموقع</h4>
+            <ul>
+                <li><a href="#majors">دليل التخصصات</a></li>
+                <li><a href="#universities">دليل الجامعات</a></li>
+                <li><a href="#tools">المراجع والأدوات</a></li>
+                <li><a href="#career">سوق العمل</a></li>
+            </ul>
+        </div>
+        <div class="foot-col">
+            <h4>روابط سريعة</h4>
+            <ul>
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#majors">ابدأ رحلتك</a></li>
+                <li><a href="#tools">عدّة الطالب</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="foot-bottom">
+        <span>جميع الحقوق محفوظة © 2026 للمهندس: عامر الديري</span>
+        <span>المرجع الهندسي السوري</span>
+    </div>
+</footer>
+
+<script>
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+        header.style.background = window.scrollY > 50
+            ? 'rgba(8,28,51,.95)'
+            : 'rgba(10,37,64,.9)';
+    });
+</script>
+
+</body>
+</html>
