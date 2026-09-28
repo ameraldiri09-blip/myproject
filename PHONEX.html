@@ -11,6 +11,7 @@
         :root {
             --primary-color: #38bdf8;
             --primary-hover: #0284c7;
+            --secondary-color: #8b5cf6;
             --bg-color: #0b1120;
             --card-bg: #1e293b;
             --card-border: #334155;
@@ -21,6 +22,9 @@
             --favorite-color: #ef4444;
             --winner-bg: rgba(16, 185, 129, 0.15);
             --winner-border: #10b981;
+            --surface-blur: rgba(15, 23, 42, 0.92);
+            --profile-bg: rgba(30, 41, 59, 0.8);
+            --shadow-color: rgba(0, 0, 0, 0.3);
 
             --rgb-angle: 0deg;
             --rgb-border: linear-gradient(var(--rgb-angle), #ff007f, #7928ca, #00dfd8, #ff007f);
@@ -53,7 +57,7 @@
 
         /* شريط علوي ثابت أنيق ونظيف */
         nav {
-            background: rgba(15, 23, 42, 0.95);
+            background: var(--surface-blur);
             backdrop-filter: blur(12px);
             padding: 10px 20px;
             display: flex;
@@ -196,7 +200,7 @@
             color: var(--text-main);
             font-size: 0.85rem;
             font-weight: 700;
-            background: rgba(30, 41, 59, 0.8);
+            background: var(--profile-bg);
             border: 1px solid rgba(56, 189, 248, 0.4);
             padding: 4px 12px 4px 6px;
             border-radius: 25px;
@@ -260,7 +264,13 @@
             font-weight: 800;
             margin-bottom: 8px;
             letter-spacing: -0.5px;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            background: linear-gradient(90deg, #38bdf8, #8b5cf6, #ec4899, #38bdf8);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: rgbFlow 6s infinite linear;
+            display: inline-block;
         }
 
         header p {
@@ -270,52 +280,118 @@
 
         .main-brand-selector {
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            max-width: 1100px;
-            margin: -20px auto 25px auto;
-            padding: 0 15px;
+            align-items: stretch;
+            gap: 4px;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 8px 10px;
             position: relative;
             z-index: 10;
-            flex-wrap: wrap;
+            background: var(--surface-blur);
+            border-bottom: 1px solid var(--card-border);
+            overflow-x: auto;
+            scrollbar-width: none;
         }
 
+        .main-brand-selector::-webkit-scrollbar { display: none; }
+
         .brand-btn {
-            flex: 1 1 calc(50% - 10px);
-            min-width: 130px;
-            padding: 12px 14px;
-            font-size: 0.9rem;
-            font-weight: 800;
-            border: 2px solid transparent;
-            border-radius: 14px;
+            flex: 1 1 0;
+            min-width: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 8px 4px;
+            font-size: 0.66rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: background 0.2s ease, color 0.2s ease;
+            color: var(--text-sub);
+            background: transparent;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .brand-badge {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            color: white;
-            background: var(--card-bg);
-            opacity: 0.8;
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: #ffffff;
+            flex-shrink: 0;
         }
 
-        .brand-btn.samsung { background: linear-gradient(135deg, #1e3a8a, #0f172a); }
-        .brand-btn.apple { background: linear-gradient(135deg, #334155, #0f172a); }
-        .brand-btn.xiaomi { background: linear-gradient(135deg, #c2410c, #431407); }
-        .brand-btn.infinix { background: linear-gradient(135deg, #047857, #064e3b); }
-        .brand-btn.favorites { background: linear-gradient(135deg, #991b1b, #450a0a); flex: 1 1 100%; }
+        .brand-badge svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        .brand-btn.favorites .brand-badge { background: #dc2626; }
+
+        .brand-badge.brand-logo {
+            width: auto;
+            height: 26px;
+            border-radius: 0;
+            background: none !important;
+        }
+        .brand-badge.brand-logo svg { height: 100%; width: auto; display: block; }
+        .brand-btn.apple .brand-badge.brand-logo {
+            width: 26px;
+            border-radius: 50%;
+            background: #1f2937 !important;
+        }
+        .brand-btn.apple .brand-badge.brand-logo svg { width: 15px; height: 15px; }
+        .brand-badge.brand-logo svg.logo-samsung,
+        .brand-badge.brand-logo svg.logo-infinix { width: 46px; height: auto; }
+        .brand-badge.brand-logo svg.logo-xiaomi { width: 26px; height: 26px; }
+        @media (min-width: 900px) {
+            .brand-badge.brand-logo svg.logo-samsung,
+            .brand-badge.brand-logo svg.logo-infinix { width: 54px; }
+        }
+
+        @media (min-width: 900px) {
+            .main-brand-selector {
+                gap: 8px;
+                padding: 10px 16px;
+                max-width: 900px;
+            }
+            .brand-btn {
+                flex-direction: row;
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                gap: 8px;
+            }
+            .brand-badge {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        .brand-btn:hover {
+            background: rgba(148, 163, 184, 0.08);
+        }
 
         .brand-btn.active {
-            opacity: 1;
-            transform: translateY(-2px);
-            box-shadow: 0 0 18px rgba(56, 189, 248, 0.6), 0 0 8px rgba(236, 72, 153, 0.4);
-            border-color: #38bdf8;
+            color: var(--text-main);
         }
+
+        .brand-btn.samsung.active { background: rgba(37, 99, 235, 0.22); color: #93c5fd; }
+        .brand-btn.apple.active { background: rgba(148, 163, 184, 0.22); color: #e2e8f0; }
+        .brand-btn.xiaomi.active { background: rgba(234, 88, 12, 0.22); color: #fdba74; }
+        .brand-btn.infinix.active { background: rgba(5, 150, 105, 0.22); color: #6ee7b7; }
+        .brand-btn.favorites.active { background: rgba(220, 38, 38, 0.22); color: #fca5a5; }
 
         .controls-container {
             max-width: 1200px;
-            margin: 0 auto 20px auto;
+            margin: 15px auto 20px auto;
             padding: 0 15px;
         }
 
@@ -381,7 +457,14 @@
             white-space: nowrap;
         }
 
-        #sortSelect {
+        .sort-dropdown {
+            position: relative;
+        }
+
+        .sort-dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
             background: var(--bg-color);
             color: var(--text-main);
             border: 1px solid var(--card-border);
@@ -392,6 +475,73 @@
             font-family: 'Tajawal', sans-serif;
             cursor: pointer;
             outline: none;
+            white-space: nowrap;
+            transition: border-color 0.2s ease;
+        }
+
+        .sort-dropdown-btn:hover {
+            border-color: var(--primary-color);
+        }
+
+        .sort-caret {
+            width: 12px;
+            height: 12px;
+            fill: none;
+            stroke: var(--text-sub);
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.25s ease;
+            flex-shrink: 0;
+        }
+
+        .sort-dropdown.open .sort-caret {
+            transform: rotate(180deg);
+        }
+
+        .sort-dropdown-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 220px;
+            background: #1e293b;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 6px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            z-index: 950;
+            overflow: hidden;
+        }
+
+        html[dir="ltr"] .sort-dropdown-menu {
+            right: auto;
+            left: 0;
+        }
+
+        .sort-dropdown.open .sort-dropdown-menu {
+            display: flex;
+        }
+
+        .sort-option {
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: background 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .sort-option:hover {
+            background: rgba(148, 163, 184, 0.12);
+        }
+
+        .sort-option.active {
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--primary-color);
         }
 
         .price-range-inputs {
@@ -763,10 +913,10 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.95);
+            background: var(--surface-blur);
             backdrop-filter: blur(10px);
             border: 1px solid var(--card-border);
-            color: white;
+            color: var(--text-main);
             padding: 10px 20px;
             border-radius: 25px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
@@ -972,10 +1122,10 @@
         }
 
         footer {
-            background-color: #0f172a;
+            background-color: var(--card-bg);
             border-top: 2px solid transparent;
             border-image: linear-gradient(90deg, #ff007f, #00dfd8, #7928ca) 1;
-            color: white;
+            color: var(--text-main);
             text-align: center;
             padding: 20px 15px;
         }
@@ -1026,6 +1176,9 @@
             nav {
                 padding: 8px 10px;
             }
+            .nav-actions {
+                gap: 6px;
+            }
             .nav-logo-text {
                 display: none;
             }
@@ -1034,8 +1187,8 @@
                 font-size: 0.78rem;
             }
             .brand-btn {
-                min-width: 45%;
-                font-size: 0.82rem;
+                padding: 7px 2px;
+                font-size: 0.64rem;
             }
             header h1 {
                 font-size: 1.5rem;
@@ -1064,9 +1217,15 @@
                 width: 100%;
             }
 
-            #sortSelect {
+            .sort-dropdown, .sort-dropdown-btn {
                 flex: 1;
                 min-width: 0;
+            }
+
+            .sort-dropdown-menu {
+                min-width: 100%;
+                left: 0;
+                right: 0;
             }
 
             .price-range-inputs {
@@ -1120,7 +1279,8 @@
                 gap: 8px;
             }
             .brand-btn {
-                min-width: 100%;
+                min-width: 52px;
+                font-size: 0.6rem;
             }
         }
     </style>
@@ -1185,19 +1345,24 @@
 
     <div class="main-brand-selector">
         <button class="brand-btn samsung active" id="samsungMainBtn" onclick="switchBrand('samsung')">
-             قسم سامسونج (Samsung)
+            <span class="brand-badge brand-logo"><svg class="logo-samsung" viewBox="0 0 64 24"><ellipse cx="32" cy="12" rx="31" ry="11.5" fill="#1428A0"/><text x="32" y="16" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="11" letter-spacing="0.6" fill="#fff">SAMSUNG</text></svg></span>
+            <span class="brand-label">سامسونج</span>
         </button>
         <button class="brand-btn apple" id="appleMainBtn" onclick="switchBrand('apple')">
-             قسم آيفون (iPhone)
+            <span class="brand-badge brand-logo"><svg class="logo-apple" viewBox="0 0 24 24" fill="#fff"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg></span>
+            <span class="brand-label">آيفون</span>
         </button>
         <button class="brand-btn xiaomi" id="xiaomiMainBtn" onclick="switchBrand('xiaomi')">
-             قسم شاومي (Xiaomi)
+            <span class="brand-badge brand-logo"><svg class="logo-xiaomi" viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#FF6900"/><text x="12" y="17" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="13" fill="#fff">mi</text></svg></span>
+            <span class="brand-label">شاومي</span>
         </button>
         <button class="brand-btn infinix" id="infinixMainBtn" onclick="switchBrand('infinix')">
-             قسم إنفينيكس (Infinix)
+            <span class="brand-badge brand-logo"><svg class="logo-infinix" viewBox="0 0 64 24"><rect width="64" height="24" rx="12" fill="#111827"/><text x="32" y="16" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="11" letter-spacing="0.4" fill="#fff">INFINIX</text></svg></span>
+            <span class="brand-label">إنفينيكس</span>
         </button>
         <button class="brand-btn favorites" id="favoritesMainBtn" onclick="switchBrand('favorites')">
-             المفضلة
+            <span class="brand-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span>
+            <span class="brand-label">المفضلة</span>
         </button>
     </div>
 
@@ -1209,18 +1374,24 @@
         <div class="secondary-toolbar">
             <div class="toolbar-group">
                 <span class="toolbar-label" id="sortLabel">فرز حسب:</span>
-                <select id="sortSelect" onchange="applyFilters()">
-                    <option value="default" id="sortOptDefault">الافتراضي</option>
-                    <option value="priceAsc" id="sortOptPriceAsc">السعر: من الأقل للأعلى</option>
-                    <option value="priceDesc" id="sortOptPriceDesc">السعر: من الأعلى للأقل</option>
-                    <option value="yearDesc" id="sortOptYearDesc">الأحدث أولاً</option>
-                    <option value="ramDesc" id="sortOptRamDesc">أعلى ذاكرة RAM</option>
-                </select>
+                <div class="sort-dropdown" id="sortDropdown">
+                    <button type="button" class="sort-dropdown-btn" id="sortDropdownBtn" onclick="toggleSortMenu(event)">
+                        <span id="sortCurrentLabel">الافتراضي</span>
+                        <svg class="sort-caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div class="sort-dropdown-menu" id="sortMenu">
+                        <div class="sort-option active" data-value="default" id="sortOptDefault" onclick="setSortMode('default')">الافتراضي</div>
+                        <div class="sort-option" data-value="priceAsc" id="sortOptPriceAsc" onclick="setSortMode('priceAsc')">السعر: من الأقل للأعلى</div>
+                        <div class="sort-option" data-value="priceDesc" id="sortOptPriceDesc" onclick="setSortMode('priceDesc')">السعر: من الأعلى للأقل</div>
+                        <div class="sort-option" data-value="yearDesc" id="sortOptYearDesc" onclick="setSortMode('yearDesc')">الأحدث أولاً</div>
+                        <div class="sort-option" data-value="ramDesc" id="sortOptRamDesc" onclick="setSortMode('ramDesc')">أعلى ذاكرة RAM</div>
+                    </div>
+                </div>
             </div>
             <div class="toolbar-group price-range-inputs">
                 <span class="toolbar-label" id="priceRangeLabel">نطاق السعر ($):</span>
-                <input type="number" id="minPriceInput" placeholder="من" min="0" oninput="applyFilters()">
-                <input type="number" id="maxPriceInput" placeholder="إلى" min="0" oninput="applyFilters()">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" id="minPriceInput" placeholder="من" oninput="sanitizeNumericInput(this); applyFilters()">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" id="maxPriceInput" placeholder="إلى" oninput="sanitizeNumericInput(this); applyFilters()">
             </div>
             <button class="toolbar-reset-btn" id="resetFiltersBtn" onclick="resetToolbarFilters()">إعادة تعيين</button>
         </div>
@@ -1319,6 +1490,7 @@
     <script>
         let currentBrand = 'samsung';
         let currentSubCat = 'all';
+        let currentSortMode = 'default';
         let compareList = [];
         let currentLang = 'ar';
         let currentUser = null;
@@ -1330,11 +1502,11 @@
                 headerTitle: "PHONEX",
                 headerDesc: "تصفح جميع الهواتف الذكية، واستعرض المواصفات كاملة أو قارن بين أي جهازين فوراً",
                 searchPlaceholder: "ابحث عن اسم الهاتف...",
-                samsungMainBtn: "قسم سامسونج (Samsung)",
-                appleMainBtn: "قسم آيفون (iPhone)",
-                xiaomiMainBtn: "قسم شاومي (Xiaomi)",
-                infinixMainBtn: "قسم إنفينيكس (Infinix)",
-                favoritesMainBtn: " المفضلة",
+                samsungMainBtn: "سامسونج",
+                appleMainBtn: "آيفون",
+                xiaomiMainBtn: "شاومي",
+                infinixMainBtn: "إنفينيكس",
+                favoritesMainBtn: "المفضلة",
                 subAll: "كل الأجهزة",
                 subAppleLegacy: "الأجيال السابقة & SE",
                 loading: "جاري تحميل الموسوعة...",
@@ -1403,11 +1575,11 @@
                 headerTitle: "PHONEX",
                 headerDesc: "Browse all smartphones, view complete specs, or compare any two devices instantly",
                 searchPlaceholder: "Search phone name...",
-                samsungMainBtn: "Samsung Section",
-                appleMainBtn: "iPhone Section",
-                xiaomiMainBtn: "Xiaomi Section",
-                infinixMainBtn: "Infinix Section",
-                favoritesMainBtn: " Favorites",
+                samsungMainBtn: "Samsung",
+                appleMainBtn: "iPhone",
+                xiaomiMainBtn: "Xiaomi",
+                infinixMainBtn: "Infinix",
+                favoritesMainBtn: "Favorites",
                 subAll: "All Devices",
                 subAppleLegacy: "Previous Generations & SE",
                 loading: "Loading Encyclopedia...",
@@ -1476,11 +1648,11 @@
                 headerTitle: "PHONEX",
                 headerDesc: "Parcourez tous les smartphones, consultez les caractéristiques complètes ou comparez deux appareils instantanément",
                 searchPlaceholder: "Rechercher un téléphone...",
-                samsungMainBtn: "Section Samsung",
-                appleMainBtn: "Section iPhone",
-                xiaomiMainBtn: "Section Xiaomi",
-                infinixMainBtn: "Section Infinix",
-                favoritesMainBtn: " Favoris",
+                samsungMainBtn: "Samsung",
+                appleMainBtn: "iPhone",
+                xiaomiMainBtn: "Xiaomi",
+                infinixMainBtn: "Infinix",
+                favoritesMainBtn: "Favoris",
                 subAll: "Tous les appareils",
                 subAppleLegacy: "Générations précédentes & SE",
                 loading: "Chargement de l'encyclopédie...",
@@ -1549,11 +1721,11 @@
                 headerTitle: "PHONEX",
                 headerDesc: "Tüm akıllı telefonlara göz atın, tam özellikleri inceleyin veya iki cihazı anında karşılaştırın",
                 searchPlaceholder: "Telefon adını ara...",
-                samsungMainBtn: "Samsung Bölümü",
-                appleMainBtn: "iPhone Bölümü",
-                xiaomiMainBtn: "Xiaomi Bölümü",
-                infinixMainBtn: "Infinix Bölümü",
-                favoritesMainBtn: " Favoriler",
+                samsungMainBtn: "Samsung",
+                appleMainBtn: "iPhone",
+                xiaomiMainBtn: "Xiaomi",
+                infinixMainBtn: "Infinix",
+                favoritesMainBtn: "Favoriler",
                 subAll: "Tüm Cihazlar",
                 subAppleLegacy: "Önceki Nesiller & SE",
                 loading: "Ansiklopedi yükleniyor...",
@@ -1622,11 +1794,11 @@
                 headerTitle: "PHONEX",
                 headerDesc: "Explora todos los smartphones, consulta las especificaciones completas o compara dos dispositivos al instante",
                 searchPlaceholder: "Buscar nombre del teléfono...",
-                samsungMainBtn: "Sección Samsung",
-                appleMainBtn: "Sección iPhone",
-                xiaomiMainBtn: "Sección Xiaomi",
-                infinixMainBtn: "Sección Infinix",
-                favoritesMainBtn: " Favoritos",
+                samsungMainBtn: "Samsung",
+                appleMainBtn: "iPhone",
+                xiaomiMainBtn: "Xiaomi",
+                infinixMainBtn: "Infinix",
+                favoritesMainBtn: "Favoritos",
                 subAll: "Todos los dispositivos",
                 subAppleLegacy: "Generaciones anteriores y SE",
                 loading: "Cargando enciclopedia...",
@@ -1731,8 +1903,8 @@
             { id: "s21p", name: "Samsung Galaxy S21 Plus", subCat: "s-series", brand: "samsung", cpu: "Exynos 2100 / SD 888", ram: "8GB", storage: "128GB/256GB", screen: "6.7-inch Dynamic AMOLED 2X", cam: "64 MP Triple", bat: "4800 mAh", price: "$379", year: 2021 },
             { id: "s21", name: "Samsung Galaxy S21", subCat: "s-series", brand: "samsung", cpu: "Exynos 2100 / SD 888", ram: "8GB", storage: "128GB/256GB", screen: "6.2-inch Dynamic AMOLED 2X", cam: "64 MP Triple", bat: "4000 mAh", price: "$299", year: 2021 },
             { id: "s20fe", name: "Samsung Galaxy S20 FE 5G", subCat: "s-series", brand: "samsung", cpu: "Snapdragon 865", ram: "6GB/8GB", storage: "128GB/256GB", screen: "6.5-inch Super AMOLED", cam: "12 MP Triple", bat: "4500 mAh", price: "$219", year: 2020 },
-            { id: "s20p", name: "Samsung Galaxy S20 Plus", subCat: "s-series", brand: "samsung", cpu: "Exynos 990 / SD 865", ram: "8GB/12GB", storage: "128GB/512GB", screen: "6.7-inch Dynamic AMOLED 2X", cam: "64 MP Quad", bat: "4500 mAh", price: "$319", year: 2020 },
-            { id: "s20", name: "Samsung Galaxy S20", subCat: "s-series", brand: "samsung", cpu: "Exynos 990 / SD 865", ram: "8GB/12GB", storage: "128GB", screen: "6.2-inch Dynamic AMOLED 2X", cam: "64 MP Triple", bat: "4000 mAh", price: "$319", year: 2020 },
+            { id: "s20p", name: "Samsung Galaxy S20 Plus", subCat: "s-series", brand: "samsung", cpu: "Exynos 990 / SD 865", ram: "8GB/12GB", storage: "128GB/512GB", screen: "6.7-inch Dynamic AMOLED 2X", cam: "64 MP Quad", bat: "4500 mAh", price: "$379", year: 2020, condition: "used" },
+            { id: "s20", name: "Samsung Galaxy S20", subCat: "s-series", brand: "samsung", cpu: "Exynos 990 / SD 865", ram: "8GB/12GB", storage: "128GB", screen: "6.2-inch Dynamic AMOLED 2X", cam: "64 MP Triple", bat: "4000 mAh", price: "$319", year: 2020, condition: "used" },
             { id: "s10p", name: "Samsung Galaxy S10+", subCat: "s-series", brand: "samsung", cpu: "Exynos 9820 / SD 855", ram: "8GB/12GB", storage: "128GB/512GB/1TB", screen: "6.4-inch Dynamic AMOLED", cam: "16 MP Triple", bat: "3400 mAh", price: "$269", year: 2019 },
             { id: "s10", name: "Samsung Galaxy S10", subCat: "s-series", brand: "samsung", cpu: "Exynos 9820 / SD 855", ram: "8GB", storage: "128GB/512GB", screen: "6.1-inch Dynamic AMOLED", cam: "16 MP Triple", bat: "3400 mAh", price: "$239", year: 2019 },
             { id: "s10e", name: "Samsung Galaxy S10e", subCat: "s-series", brand: "samsung", cpu: "Exynos 9820 / SD 855", ram: "6GB/8GB", storage: "128GB/256GB", screen: "5.8-inch Dynamic AMOLED", cam: "16 MP Dual", bat: "3100 mAh", price: "$199", year: 2019 },
@@ -1742,13 +1914,13 @@
             { id: "n10", name: "Samsung Galaxy Note 10", subCat: "note-legacy", brand: "samsung", cpu: "Exynos 9825 / SD 855", ram: "8GB", storage: "256GB", screen: "6.3-inch Dynamic AMOLED", cam: "12 MP Triple", bat: "3500 mAh", price: "$259", year: 2019 },
             { id: "n10l", name: "Samsung Galaxy Note 10 Lite", subCat: "note-legacy", brand: "samsung", cpu: "Exynos 9810", ram: "6GB/8GB", storage: "128GB", screen: "6.7-inch Super AMOLED", cam: "12 MP Triple", bat: "4500 mAh", price: "$149", year: 2019 },
             { id: "n9", name: "Samsung Galaxy Note 9", subCat: "note-legacy", brand: "samsung", cpu: "Exynos 9810 / SD 845", ram: "6GB/8GB", storage: "128GB/512GB", screen: "6.4-inch Super AMOLED", cam: "12 MP Dual", bat: "4000 mAh", price: "$229", year: 2018 },
-            { id: "a57", name: "Samsung Galaxy A57 5G", subCat: "a-series", brand: "samsung", cpu: "Exynos 1680 (4nm)", ram: "8GB/12GB", storage: "128GB/256GB/512GB", screen: "6.7-inch Super AMOLED+ (120Hz)", cam: "50 MP Triple OIS", bat: "5000 mAh (45W)", price: "$289", year: 2025 },
+            { id: "a57", name: "Samsung Galaxy A57 5G", subCat: "a-series", brand: "samsung", cpu: "Exynos 1680 (4nm)", ram: "8GB/12GB", storage: "128GB/256GB/512GB", screen: "6.7-inch Super AMOLED+ (120Hz)", cam: "50 MP Triple OIS", bat: "5000 mAh (45W)", price: "$549", year: 2026, condition: "new" },
             { id: "a56", name: "Samsung Galaxy A56 5G", subCat: "a-series", brand: "samsung", cpu: "Exynos 1580", ram: "8GB/12GB", storage: "128GB/256GB", screen: "6.6-inch Super AMOLED (120Hz)", cam: "50 MP Triple", bat: "5000 mAh", price: "$369", year: 2025 },
             { id: "a55", name: "Samsung Galaxy A55 5G", subCat: "a-series", brand: "samsung", cpu: "Exynos 1480", ram: "8GB/12GB", storage: "128GB/256GB", screen: "6.6-inch Super AMOLED", cam: "50 MP Triple", bat: "5000 mAh", price: "$269", year: 2024 },
             { id: "a54", name: "Samsung Galaxy A54 5G", subCat: "a-series", brand: "samsung", cpu: "Exynos 1380", ram: "6GB/8GB", storage: "128GB/256GB", screen: "6.4-inch Super AMOLED", cam: "50 MP Triple", bat: "5000 mAh", price: "$199", year: 2023 },
             { id: "a53", name: "Samsung Galaxy A53 5G", subCat: "a-series", brand: "samsung", cpu: "Exynos 1280", ram: "6GB/8GB", storage: "128GB/256GB", screen: "6.5-inch Super AMOLED", cam: "64 MP Quad", bat: "5000 mAh", price: "$159", year: 2022 },
             { id: "a52s", name: "Samsung Galaxy A52s 5G", subCat: "a-series", brand: "samsung", cpu: "Snapdragon 778G", ram: "6GB/8GB", storage: "128GB/256GB", screen: "6.5-inch Super AMOLED", cam: "64 MP Quad", bat: "4500 mAh", price: "$149", year: 2021 },
-            { id: "a37", name: "Samsung Galaxy A37 5G", subCat: "a-series", brand: "samsung", cpu: "Exynos 1480 / SD 7s Gen 2", ram: "6GB/8GB", storage: "128GB/256GB", screen: "6.7-inch Super AMOLED (120Hz)", cam: "50 MP Triple OIS", bat: "5000 mAh (45W)", price: "$199", year: 2025 },
+            { id: "a37", name: "Samsung Galaxy A37 5G", subCat: "a-series", brand: "samsung", cpu: "Exynos 1480 / SD 7s Gen 2", ram: "6GB/8GB", storage: "128GB/256GB", screen: "6.7-inch Super AMOLED (120Hz)", cam: "50 MP Triple OIS", bat: "5000 mAh (45W)", price: "$449", year: 2026, condition: "new" },
             { id: "a36", name: "Samsung Galaxy A36 5G", subCat: "a-series", brand: "samsung", cpu: "Snapdragon 7s Gen 2", ram: "6GB/8GB", storage: "128GB/256GB", screen: "6.6-inch Super AMOLED", cam: "50 MP Triple", bat: "5000 mAh", price: "$289", year: 2025 },
             { id: "a35", name: "Samsung Galaxy A35 5G", subCat: "a-series", brand: "samsung", cpu: "Exynos 1380", ram: "6GB/8GB", storage: "128GB/256GB", screen: "6.6-inch Super AMOLED", cam: "50 MP Triple", bat: "5000 mAh", price: "$199", year: 2024 },
             { id: "a34", name: "Samsung Galaxy A34 5G", subCat: "a-series", brand: "samsung", cpu: "MediaTek Dimensity 1080", ram: "6GB/8GB", storage: "128GB/256GB", screen: "6.6-inch Super AMOLED", cam: "48 MP Triple", bat: "5000 mAh", price: "$169", year: 2023 },
@@ -1868,19 +2040,33 @@
             { id: "inf_z30", name: "Infinix Zero 30 5G", subCat: "infinix-zero", brand: "infinix", cpu: "MediaTek Dimensity 8020", ram: "8GB/12GB", storage: "256GB", screen: "6.78-inch Curved AMOLED 144Hz", cam: "108 MP OIS Triple", bat: "5000 mAh (68W)", price: "$179", year: 2023 },
             { id: "inf_zflip", name: "Infinix Zero Flip 5G", subCat: "infinix-zero", brand: "infinix", cpu: "MediaTek Dimensity 8020", ram: "8GB", storage: "512GB", screen: "6.9-inch Foldable LTPO AMOLED (120Hz)", cam: "50 MP Dual OIS", bat: "4720 mAh (70W)", price: "$279", year: 2023 },
             { id: "inf_z20", name: "Infinix Zero 20", subCat: "infinix-zero", brand: "infinix", cpu: "MediaTek Helio G99", ram: "8GB", storage: "128GB/256GB", screen: "6.7-inch AMOLED Curved 90Hz", cam: "108 MP OIS Dual", bat: "5000 mAh (33W)", price: "$109", year: 2022 },
+            { id: "inf_zultra", name: "Infinix Zero Ultra", subCat: "infinix-zero", brand: "infinix", cpu: "MediaTek Dimensity 920", ram: "8GB/12GB", storage: "256GB", screen: "6.8-inch Curved AMOLED 120Hz", cam: "108 MP OIS Triple", bat: "5000 mAh (180W SuperCharge)", price: "$159", year: 2022 },
+            { id: "inf_z30_4g", name: "Infinix Zero 30 4G", subCat: "infinix-zero", brand: "infinix", cpu: "MediaTek Helio G99", ram: "8GB", storage: "256GB", screen: "6.78-inch Curved AMOLED 120Hz", cam: "108 MP OIS Triple", bat: "5000 mAh (68W)", price: "$159", year: 2023 },
+            { id: "inf_zxpro", name: "Infinix Zero X Pro", subCat: "infinix-zero", brand: "infinix", cpu: "MediaTek Helio G95", ram: "8GB", storage: "128GB/256GB", screen: "6.67-inch AMOLED Curved 90Hz", cam: "108 MP Quad OIS (60x Zoom)", bat: "4500 mAh (45W)", price: "$99", year: 2021 },
+            { id: "inf_zx", name: "Infinix Zero X", subCat: "infinix-zero", brand: "infinix", cpu: "MediaTek Helio G95", ram: "8GB", storage: "128GB", screen: "6.78-inch Curved AMOLED 90Hz", cam: "48 MP Quad OIS", bat: "4500 mAh (33W)", price: "$89", year: 2021 },
             { id: "inf_n50pro", name: "Infinix Note 50 Pro+ 5G", subCat: "infinix-note", brand: "infinix", cpu: "MediaTek Dimensity 7300 (4nm)", ram: "12GB", storage: "256GB/512GB", screen: "6.78-inch Curved AMOLED (120Hz)", cam: "108 MP Triple OIS", bat: "5000 mAh (100W)", price: "$249", year: 2025 },
             { id: "inf_n40proplus", name: "Infinix Note 40 Pro+ 5G", subCat: "infinix-note", brand: "infinix", cpu: "MediaTek Dimensity 7020", ram: "12GB", storage: "256GB", screen: "6.78-inch Curved AMOLED 120Hz", cam: "108 MP OIS Triple", bat: "4600 mAh (100W + 20W MagCharge)", price: "$189", year: 2024 },
             { id: "inf_n40pro", name: "Infinix Note 40 Pro 5G", subCat: "infinix-note", brand: "infinix", cpu: "MediaTek Dimensity 7020", ram: "8GB/12GB", storage: "256GB", screen: "6.78-inch Curved AMOLED 120Hz", cam: "108 MP OIS Triple", bat: "5000 mAh (45W)", price: "$169", year: 2024 },
+            { id: "inf_n40", name: "Infinix Note 40", subCat: "infinix-note", brand: "infinix", cpu: "MediaTek Helio G99 Ultra", ram: "8GB", storage: "128GB/256GB", screen: "6.78-inch Curved AMOLED 120Hz", cam: "108 MP Triple", bat: "5000 mAh (45W)", price: "$129", year: 2024 },
+            { id: "inf_n30pro", name: "Infinix Note 30 Pro", subCat: "infinix-note", brand: "infinix", cpu: "MediaTek Helio G99", ram: "8GB", storage: "256GB", screen: "6.78-inch Curved AMOLED 120Hz", cam: "108 MP OIS Triple", bat: "5000 mAh (68W)", price: "$149", year: 2023 },
+            { id: "inf_n13pro", name: "Infinix Note 13 Pro", subCat: "infinix-note", brand: "infinix", cpu: "MediaTek Helio G99", ram: "8GB", storage: "128GB/256GB", screen: "6.7-inch AMOLED Curved 120Hz", cam: "108 MP OIS Triple", bat: "5000 mAh (68W)", price: "$139", year: 2023 },
             { id: "inf_n12pro", name: "Infinix Note 12 Pro", subCat: "infinix-note", brand: "infinix", cpu: "MediaTek Helio G96", ram: "8GB", storage: "128GB/256GB", screen: "6.7-inch AMOLED Curved 60Hz", cam: "108 MP OIS Triple", bat: "5000 mAh (33W)", price: "$99", year: 2022 },
             { id: "inf_n12", name: "Infinix Note 12", subCat: "infinix-note", brand: "infinix", cpu: "MediaTek Helio G88", ram: "4GB/6GB/8GB", storage: "128GB/256GB", screen: "6.7-inch IPS LCD 90Hz", cam: "50 MP Triple", bat: "5000 mAh (33W)", price: "$79", year: 2022 },
+            { id: "inf_n11", name: "Infinix Note 11", subCat: "infinix-note", brand: "infinix", cpu: "MediaTek Helio G88", ram: "4GB/6GB", storage: "128GB", screen: "6.7-inch IPS LCD 90Hz", cam: "50 MP Triple", bat: "5000 mAh (33W)", price: "$69", year: 2021 },
+            { id: "inf_gt30pro", name: "Infinix GT 30 Pro 5G", subCat: "infinix-gt", brand: "infinix", cpu: "MediaTek Dimensity 8350 Ultimate", ram: "12GB/16GB", storage: "256GB/512GB", screen: "6.78-inch AMOLED (144Hz)", cam: "50 MP OIS Dual", bat: "5500 mAh (120W)", price: "$329", year: 2026, condition: "new" },
             { id: "inf_gt20pro", name: "Infinix GT 20 Pro 5G", subCat: "infinix-gt", brand: "infinix", cpu: "MediaTek Dimensity 8200 Ultimate", ram: "8GB/12GB", storage: "256GB", screen: "6.78-inch AMOLED 144Hz", cam: "108 MP OIS Triple", bat: "5000 mAh (45W)", price: "$199", year: 2024 },
             { id: "inf_gt10pro", name: "Infinix GT 10 Pro 5G", subCat: "infinix-gt", brand: "infinix", cpu: "MediaTek Dimensity 8050", ram: "8GB", storage: "256GB", screen: "6.67-inch AMOLED 120Hz", cam: "108 MP Triple", bat: "5000 mAh (45W)", price: "$139", year: 2023 },
             { id: "inf_h50", name: "Infinix Hot 50 Pro+ 4G", subCat: "infinix-hot", brand: "infinix", cpu: "MediaTek Helio G100 (6nm)", ram: "8GB", storage: "128GB/256GB", screen: "6.78-inch Curved AMOLED (120Hz)", cam: "50 MP Dual", bat: "5000 mAh (33W)", price: "$149", year: 2025 },
             { id: "inf_h40pro", name: "Infinix Hot 40 Pro", subCat: "infinix-hot", brand: "infinix", cpu: "MediaTek Helio G99", ram: "8GB", storage: "128GB/256GB", screen: "6.78-inch IPS LCD 120Hz", cam: "108 MP Triple", bat: "5000 mAh (33W)", price: "$109", year: 2024 },
+            { id: "inf_h40i", name: "Infinix Hot 40i", subCat: "infinix-hot", brand: "infinix", cpu: "MediaTek Helio G88", ram: "4GB/8GB", storage: "128GB/256GB", screen: "6.6-inch IPS LCD 90Hz", cam: "50 MP Dual", bat: "5000 mAh (18W)", price: "$89", year: 2024 },
+            { id: "inf_h30", name: "Infinix Hot 30", subCat: "infinix-hot", brand: "infinix", cpu: "MediaTek Helio G88", ram: "4GB/8GB", storage: "128GB/256GB", screen: "6.78-inch IPS LCD 90Hz", cam: "50 MP Dual", bat: "5000 mAh (18W)", price: "$79", year: 2023 },
+            { id: "inf_h11", name: "Infinix Hot 11", subCat: "infinix-hot", brand: "infinix", cpu: "MediaTek Helio G70", ram: "4GB/6GB", storage: "64GB/128GB", screen: "6.7-inch IPS LCD 90Hz", cam: "50 MP Dual", bat: "6000 mAh (18W)", price: "$49", year: 2021 },
             { id: "inf_h20s", name: "Infinix Hot 20S", subCat: "infinix-hot", brand: "infinix", cpu: "MediaTek Helio G88", ram: "4GB/8GB", storage: "128GB", screen: "6.78-inch IPS LCD 90Hz", cam: "50 MP Dual", bat: "5000 mAh (18W)", price: "$69", year: 2022 },
             { id: "inf_h20", name: "Infinix Hot 20", subCat: "infinix-hot", brand: "infinix", cpu: "MediaTek Helio G88", ram: "4GB/8GB", storage: "128GB", screen: "6.6-inch IPS LCD 90Hz", cam: "50 MP Dual", bat: "5000 mAh (18W)", price: "$59", year: 2022 },
             { id: "inf_sm8pro", name: "Infinix Smart 8 Pro", subCat: "infinix-smart", brand: "infinix", cpu: "MediaTek Helio G36", ram: "4GB/8GB", storage: "64GB/128GB", screen: "6.6-inch IPS LCD 90Hz", cam: "50 MP Dual", bat: "5000 mAh", price: "$69", year: 2024 },
-            { id: "inf_sm6", name: "Infinix Smart 6", subCat: "infinix-smart", brand: "infinix", cpu: "MediaTek Helio A22", ram: "2GB/3GB", storage: "32GB/64GB", screen: "6.6-inch IPS LCD 60Hz", cam: "13 MP Dual", bat: "5000 mAh", price: "$39", year: 2022 }
+            { id: "inf_sm7", name: "Infinix Smart 7", subCat: "infinix-smart", brand: "infinix", cpu: "Unisoc T606", ram: "3GB/4GB", storage: "64GB/128GB", screen: "6.6-inch IPS LCD 90Hz", cam: "13 MP Dual", bat: "5000 mAh (10W)", price: "$49", year: 2023 },
+            { id: "inf_sm6", name: "Infinix Smart 6", subCat: "infinix-smart", brand: "infinix", cpu: "MediaTek Helio A22", ram: "2GB/3GB", storage: "32GB/64GB", screen: "6.6-inch IPS LCD 60Hz", cam: "13 MP Dual", bat: "5000 mAh", price: "$39", year: 2022 },
+            { id: "inf_sm5", name: "Infinix Smart 5", subCat: "infinix-smart", brand: "infinix", cpu: "MediaTek Helio A22", ram: "2GB/3GB", storage: "32GB/64GB", screen: "6.6-inch IPS LCD 60Hz", cam: "13 MP Dual", bat: "6000 mAh (10W)", price: "$29", year: 2021 }
         ];
 
         const allPhones = [...samsungList, ...iphoneList, ...xiaomiList, ...infinixList];
@@ -2060,11 +2246,44 @@
             return allPhones.reduce((max, p) => Math.max(max, p.year || 0), 0);
         }
 
+        function sanitizeNumericInput(el) {
+            const cleaned = el.value.replace(/[^0-9]/g, '');
+            if (cleaned !== el.value) el.value = cleaned;
+        }
+
+        function toggleSortMenu(event) {
+            event.stopPropagation();
+            document.getElementById('sortDropdown').classList.toggle('open');
+        }
+
+        function closeSortMenu() {
+            document.getElementById('sortDropdown').classList.remove('open');
+        }
+
+        function setSortMode(mode) {
+            currentSortMode = mode;
+            document.querySelectorAll('.sort-option').forEach(opt => opt.classList.remove('active'));
+            const selectedOpt = document.querySelector(`.sort-option[data-value="${mode}"]`);
+            if (selectedOpt) {
+                selectedOpt.classList.add('active');
+                document.getElementById('sortCurrentLabel').innerText = selectedOpt.innerText;
+            }
+            closeSortMenu();
+            applyFilters();
+        }
+
+        document.addEventListener('click', (event) => {
+            const sortDropdown = document.getElementById('sortDropdown');
+            if (sortDropdown && !sortDropdown.contains(event.target)) {
+                closeSortMenu();
+            }
+        });
+
         function resetToolbarFilters() {
             document.getElementById('searchInput').value = '';
             document.getElementById('minPriceInput').value = '';
             document.getElementById('maxPriceInput').value = '';
-            document.getElementById('sortSelect').value = 'default';
+            setSortMode('default');
             currentSubCat = 'all';
             const activeSubContainer = document.getElementById(`${currentBrand}SubFilters`);
             if (activeSubContainer) {
@@ -2085,7 +2304,7 @@
             const minPrice = parseFloat(document.getElementById('minPriceInput').value) || 0;
             const maxPriceRaw = document.getElementById('maxPriceInput').value;
             const maxPrice = maxPriceRaw ? parseFloat(maxPriceRaw) : Infinity;
-            const sortMode = document.getElementById('sortSelect').value;
+            const sortMode = currentSortMode;
             grid.innerHTML = '';
 
             if (!bestValueMap) bestValueMap = computeBestValueMap();
@@ -2475,14 +2694,16 @@
             document.getElementById('sortOptPriceDesc').innerText = i18n[currentLang].sortOptPriceDesc;
             document.getElementById('sortOptYearDesc').innerText = i18n[currentLang].sortOptYearDesc;
             document.getElementById('sortOptRamDesc').innerText = i18n[currentLang].sortOptRamDesc;
+            const activeSortOpt = document.querySelector('.sort-option.active');
+            if (activeSortOpt) document.getElementById('sortCurrentLabel').innerText = activeSortOpt.innerText;
             document.getElementById('priceRangeLabel').innerText = i18n[currentLang].priceRangeLabel;
             document.getElementById('resetFiltersBtn').innerText = i18n[currentLang].resetFiltersBtn;
 
-            document.getElementById('samsungMainBtn').innerText = i18n[currentLang].samsungMainBtn;
-            document.getElementById('appleMainBtn').innerText = i18n[currentLang].appleMainBtn;
-            document.getElementById('xiaomiMainBtn').innerText = i18n[currentLang].xiaomiMainBtn;
-            document.getElementById('infinixMainBtn').innerText = i18n[currentLang].infinixMainBtn;
-            document.getElementById('favoritesMainBtn').innerText = i18n[currentLang].favoritesMainBtn;
+            document.querySelector('#samsungMainBtn .brand-label').innerText = i18n[currentLang].samsungMainBtn;
+            document.querySelector('#appleMainBtn .brand-label').innerText = i18n[currentLang].appleMainBtn;
+            document.querySelector('#xiaomiMainBtn .brand-label').innerText = i18n[currentLang].xiaomiMainBtn;
+            document.querySelector('#infinixMainBtn .brand-label').innerText = i18n[currentLang].infinixMainBtn;
+            document.querySelector('#favoritesMainBtn .brand-label').innerText = i18n[currentLang].favoritesMainBtn;
 
             document.querySelectorAll('.sub-btn[data-sub="all"]').forEach(btn => btn.innerText = i18n[currentLang].subAll);
             const appleLegacyBtn = document.querySelector('#appleSubFilters .sub-btn[data-sub="iphone-legacy"]');
@@ -2516,6 +2737,9 @@
 
         // استعادة الجلسة واللغة المحفوظة تلقائياً عند تحميل الصفحة أو تحديثها
         window.addEventListener('DOMContentLoaded', () => {
+            try { localStorage.removeItem('phonexTheme'); } catch (e) {}
+            document.documentElement.removeAttribute('data-theme');
+
             const savedUser = localStorage.getItem('currentUser');
             if (savedUser) {
                 try {
