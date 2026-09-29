@@ -1,0 +1,3100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="دليل شامل لمحرر الأكواد Visual Studio Code">
+  <meta name="theme-color" content="#1E1E1E">
+  <title>VS Code - محرر الأكواد المتكامل | دليل شامل</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Fira+Code:wght@400;500&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #1E1E1E;
+      --bg-deep: #181818;
+      --bg-elevated: #202020;
+      --surface: #252526;
+      --surface-hover: #2d2d30;
+      --primary-blue: #007ACC;
+      --primary-blue-light: #1a8cd8;
+      --primary-blue-glow: rgba(0, 122, 204, 0.4);
+      --light-blue: #9CDCFE;
+      --yellow: #DCDCAA;
+      --text-primary: #E8E8E8;
+      --text-secondary: #CCCCCC;
+      --text-muted: #858585;
+      --border-subtle: #3C3C3C;
+      --border-accent: #4d4d4d;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.75);
+      --shadow-glow: 0 0 30px rgba(0, 122, 204, 0.3);
+      --radius-card: 16px;
+      --radius-sm: 10px;
+      --transition-fast: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+      --transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+      --font-mono: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+      --font-sans: 'Tajawal', 'Poppins', 'Segoe UI', 'Tahoma', sans-serif;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+    }
+
+    html[lang="en"] body,
+    html[lang="fr"] body,
+    html[lang="es"] body,
+    html[lang="tr"] body {
+      font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      overflow-x: hidden;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      width: 100%;
+      max-width: 100vw;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(0, 122, 204, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(206, 145, 120, 0.06) 0%, transparent 40%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    ::selection {
+      background: var(--primary-blue);
+      color: #fff;
+    }
+
+    img, svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      padding-right: calc(1.25rem + var(--safe-right));
+      padding-left: calc(1.25rem + var(--safe-left));
+    }
+
+    .section {
+      padding: 4rem 0;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .section-title {
+      font-size: clamp(1.4rem, 4vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      letter-spacing: -0.5px;
+      line-height: 1.3;
+      flex-wrap: wrap;
+    }
+
+    .section-title i {
+      color: var(--primary-blue);
+      font-size: 0.85em;
+      background: rgba(0, 122, 204, 0.12);
+      padding: 0.5rem;
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .section-subtitle {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 720px;
+      line-height: 1.8;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    /* ===== شريط التنقل ===== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(30, 30, 30, 0.92);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.7rem 0;
+      padding-top: calc(0.7rem + var(--safe-top));
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      min-height: 44px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--primary-blue), #0098ff);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 4px 15px var(--primary-blue-glow);
+      flex-shrink: 0;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.88rem;
+      transition: var(--transition-fast);
+      padding: 0.5rem 0.8rem;
+      border-radius: 8px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+      background: rgba(0, 122, 204, 0.12);
+    }
+
+    .nav-cta {
+      background: var(--primary-blue) !important;
+      color: #fff !important;
+      padding: 0.5rem 1rem !important;
+      border-radius: 40px !important;
+      font-weight: 600;
+      box-shadow: 0 4px 12px var(--primary-blue-glow);
+      display: inline-flex !important;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* ===== خيار اللغة داخل القائمة الجانبية ===== */
+    .lang-mobile-item {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.5rem 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .lang-mobile-item .lang-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--light-blue);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.6rem 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .lang-mobile-item .lang-title i {
+      color: var(--primary-blue);
+    }
+
+    .lang-mobile-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .lang-mobile-option {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.7rem;
+      width: 100%;
+      padding: 0.7rem 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid transparent;
+      border-radius: 10px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      font-family: inherit;
+      text-align: start;
+    }
+
+    .lang-mobile-option:hover {
+      background: rgba(0, 122, 204, 0.15);
+      border-color: rgba(0, 122, 204, 0.3);
+      color: #fff;
+    }
+
+    .lang-mobile-option.active {
+      background: rgba(0, 122, 204, 0.2);
+      border-color: var(--primary-blue);
+      color: var(--light-blue);
+      font-weight: 700;
+    }
+
+    .lang-mobile-option .lang-flag {
+      font-size: 1.1rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .lang-mobile-option .lang-name-text {
+      flex-grow: 1;
+    }
+
+    .lang-mobile-option .check-icon {
+      color: var(--primary-blue);
+      font-size: 0.8rem;
+      opacity: 0;
+      flex-shrink: 0;
+    }
+
+    .lang-mobile-option.active .check-icon {
+      opacity: 1;
+    }
+
+    /* ===== خيار اللغة على الديسكتوب (زر صغير بجانب القائمة) ===== */
+    .lang-desktop {
+      display: inline-flex;
+      position: relative;
+    }
+
+    .lang-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(0, 122, 204, 0.12);
+      border: 1px solid rgba(0, 122, 204, 0.3);
+      color: var(--text-primary);
+      padding: 0.45rem 0.7rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      font-family: inherit;
+      white-space: nowrap;
+      height: 36px;
+    }
+
+    .lang-btn:hover {
+      background: rgba(0, 122, 204, 0.25);
+      border-color: var(--primary-blue);
+      color: #fff;
+    }
+
+    .lang-btn .fa-globe {
+      color: var(--primary-blue);
+      font-size: 0.85rem;
+    }
+
+    .lang-btn .fa-chevron-down {
+      font-size: 0.6rem;
+      transition: var(--transition-fast);
+    }
+
+    .lang-desktop.open .lang-btn .fa-chevron-down {
+      transform: rotate(180deg);
+    }
+
+    /* قائمة اللغة على الديسكتوب */
+    .lang-dropdown-desktop {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      left: auto;
+      min-width: 180px;
+      background: var(--surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px) scale(0.98);
+      transform-origin: top right;
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      z-index: 1200;
+      padding: 0.4rem;
+      pointer-events: none;
+    }
+
+    .lang-desktop.open .lang-dropdown-desktop {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .lang-option {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.55rem;
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      border-radius: 8px;
+      font-family: inherit;
+      text-align: start;
+    }
+
+    .lang-option:hover {
+      background: rgba(0, 122, 204, 0.15);
+      color: #fff;
+    }
+
+    .lang-option.active {
+      background: rgba(0, 122, 204, 0.2);
+      color: var(--light-blue);
+      font-weight: 700;
+    }
+
+    .lang-flag {
+      font-size: 1.05rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .lang-option .lang-name-text {
+      flex-grow: 1;
+      white-space: nowrap;
+    }
+
+    .lang-option .check-icon {
+      color: var(--primary-blue);
+      font-size: 0.7rem;
+      opacity: 0;
+      flex-shrink: 0;
+    }
+
+    .lang-option.active .check-icon {
+      opacity: 1;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: var(--transition-fast);
+      width: 38px;
+      height: 38px;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mobile-menu-btn:hover,
+    .mobile-menu-btn:active {
+      background: rgba(0, 122, 204, 0.15);
+    }
+
+    /* ===== قسم البطل ===== */
+    .hero {
+      padding: 3rem 0 2.5rem;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 122, 204, 0.12);
+      border: 1px solid rgba(0, 122, 204, 0.3);
+      color: var(--light-blue);
+      padding: 0.4rem 0.9rem;
+      border-radius: 40px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 1.1rem;
+      max-width: 100%;
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--primary-blue);
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 var(--primary-blue);
+      animation: pulse-ring 2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(0, 122, 204, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(0, 122, 204, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 122, 204, 0); }
+    }
+
+    .hero-content h1 {
+      font-size: clamp(1.6rem, 5.5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1.1rem;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--primary-blue), var(--light-blue), var(--primary-blue));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-shift 4s ease infinite;
+    }
+
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+    }
+
+    .hero-content p {
+      font-size: clamp(0.9rem, 2vw, 1.08rem);
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      max-width: 580px;
+      line-height: 1.8;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.8rem 1.6rem;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+      text-align: center;
+      min-height: 46px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-blue), #0098ff);
+      color: #fff;
+      box-shadow: 0 4px 20px var(--primary-blue-glow);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px var(--primary-blue-glow);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1.5px solid var(--border-accent);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary-blue);
+      color: #fff;
+      background: rgba(0, 122, 204, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .btn-lg {
+      padding: 0.95rem 2rem;
+      font-size: 0.98rem;
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 100%;
+    }
+
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      width: 90%;
+      height: 90%;
+      background: radial-gradient(circle, rgba(0, 122, 204, 0.2) 0%, transparent 70%);
+      filter: blur(60px);
+      z-index: -1;
+      animation: glow-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.1); }
+    }
+
+    .code-window {
+      background: #1a1a1a;
+      border-radius: 12px;
+      border: 1px solid var(--border-accent);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 540px;
+      animation: float 6s ease-in-out infinite;
+      direction: ltr;
+      text-align: left;
+      overflow: hidden;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.65rem 0.9rem;
+      background: #2d2d2d;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot.red { background: #ff5f56; }
+    .dot.yellow { background: #ffbd2e; }
+    .dot.green { background: #27c93f; }
+
+    .code-filename {
+      margin-left: auto;
+      color: #858585;
+      font-size: 0.72rem;
+      direction: ltr;
+      font-family: var(--font-mono);
+    }
+
+    .code-body {
+      padding: 1.1rem;
+      font-family: var(--font-mono);
+      font-size: clamp(0.68rem, 1.8vw, 0.82rem);
+      line-height: 1.65;
+      color: #d4d4d4;
+      direction: ltr;
+      text-align: left;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .code-line {
+      display: flex;
+      gap: 0.7rem;
+      padding: 0.05rem 0;
+      white-space: nowrap;
+    }
+
+    .line-num {
+      color: #4d4d4d;
+      min-width: 14px;
+      text-align: right;
+      user-select: none;
+      font-size: 0.72rem;
+      flex-shrink: 0;
+    }
+
+    .tag { color: #569CD6; }
+    .attr { color: #9CDCFE; }
+    .str { color: #CE9178; }
+    .func { color: #DCDCAA; }
+    .comment { color: #6A9955; font-style: italic; }
+    .keyword { color: #C586C0; }
+    .op { color: #d4d4d4; }
+
+    .cursor-blink {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: #fff;
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ===== قسم الواجهة ===== */
+    .interface-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .interface-diagram {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      padding: 1.1rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .interface-diagram:hover {
+      border-color: rgba(0, 122, 204, 0.4);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .mock-editor {
+      display: flex;
+      flex-direction: column;
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: 0.72rem;
+      border: 1px solid var(--border-subtle);
+      direction: ltr;
+      text-align: left;
+      width: 100%;
+    }
+
+    .mock-top {
+      display: flex;
+      width: 100%;
+      min-height: 0;
+    }
+
+    .mock-activity-bar {
+      background: #333;
+      width: 38px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.6rem 0;
+      gap: 0.7rem;
+      color: #858585;
+      font-size: 0.92rem;
+      flex-shrink: 0;
+    }
+
+    .mock-activity-bar i {
+      padding: 0.2rem;
+      border-radius: 6px;
+      transition: var(--transition-fast);
+    }
+
+    .mock-activity-bar i.active {
+      color: #fff;
+      background: rgba(0, 122, 204, 0.2);
+      border-right: 2px solid var(--primary-blue);
+    }
+
+    .mock-main {
+      display: flex;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .mock-sidebar {
+      background: #252526;
+      width: 120px;
+      padding: 0.6rem;
+      border-left: 1px solid #3c3c3c;
+      color: #ccc;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .mock-sidebar-title {
+      font-size: 0.58rem;
+      color: #858585;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .mock-sidebar-item {
+      font-size: 0.66rem;
+      padding: 0.18rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.28rem;
+      padding-right: 0.28rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mock-editor-area {
+      background: #1e1e1e;
+      flex: 1;
+      padding: 0.7rem;
+      font-family: var(--font-mono);
+      color: #d4d4d4;
+      min-height: 100px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .mock-tabs {
+      display: flex;
+      gap: 0.2rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .mock-tab {
+      padding: 0.22rem 0.5rem;
+      background: #2d2d2d;
+      border-radius: 6px 6px 0 0;
+      color: #858585;
+      white-space: nowrap;
+    }
+
+    .mock-tab.active {
+      background: #1e1e1e;
+      color: #fff;
+      border-top: 2px solid var(--primary-blue);
+    }
+
+    .mock-code-content {
+      font-size: 0.66rem;
+      line-height: 1.55;
+      overflow: hidden;
+    }
+
+    .mock-panel {
+      background: #1e1e1e;
+      border-top: 1px solid #3c3c3c;
+      padding: 0.45rem 0.7rem;
+      font-family: var(--font-mono);
+      color: #6a9955;
+      font-size: 0.62rem;
+      display: flex;
+      gap: 0.85rem;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mock-status-bar {
+      background: var(--primary-blue);
+      color: #fff;
+      padding: 0.22rem 0.7rem;
+      font-size: 0.58rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .interface-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .interface-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 1rem;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interface-item::before {
+      content: '';
+      position: absolute;
+      inset-inline-end: 0;
+      top: 0;
+      height: 100%;
+      width: 3px;
+      background: var(--primary-blue);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: var(--transition);
+    }
+
+    .interface-item:hover::before {
+      transform: scaleY(1);
+    }
+
+    .interface-item:hover {
+      border-color: rgba(0, 122, 204, 0.4);
+      background: var(--surface-hover);
+      transform: translateX(-6px);
+    }
+
+    [dir="ltr"] .interface-item:hover {
+      transform: translateX(6px);
+    }
+
+    .interface-icon {
+      min-width: 38px;
+      width: 38px;
+      height: 38px;
+      background: rgba(0, 122, 204, 0.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--primary-blue);
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+
+    .interface-item:hover .interface-icon {
+      background: var(--primary-blue);
+      color: #fff;
+      transform: rotate(-8deg) scale(1.05);
+    }
+
+    .interface-item h4 {
+      color: #fff;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+      font-weight: 700;
+    }
+
+    .interface-item p {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    /* ===== شبكة الميزات ===== */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 1.8rem 1.2rem;
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-blue), var(--light-blue));
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: var(--transition);
+    }
+
+    [dir="ltr"] .feature-card::after {
+      transform-origin: left;
+    }
+
+    .feature-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 122, 204, 0.4);
+      box-shadow: var(--shadow-md), var(--shadow-glow);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(0, 122, 204, 0.1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--primary-blue);
+      margin: 0 auto 1rem;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover .feature-icon {
+      background: var(--primary-blue);
+      color: #fff;
+      transform: translateY(-4px) rotate(6deg);
+      box-shadow: 0 10px 25px var(--primary-blue-glow);
+    }
+
+    .feature-card h3 {
+      color: #fff;
+      font-size: 1.05rem;
+      margin-bottom: 0.45rem;
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    /* ===== الامتدادات ===== */
+    .extensions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1rem;
+    }
+
+    .ext-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      padding: 1.4rem 1.1rem;
+      text-align: center;
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ext-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary-blue);
+      box-shadow: var(--shadow-md), var(--shadow-glow);
+    }
+
+    .ext-icon {
+      font-size: 1.9rem;
+      margin-bottom: 0.8rem;
+      color: var(--primary-blue);
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .ext-card:hover .ext-icon {
+      transform: scale(1.12) rotate(-5deg);
+      color: var(--light-blue);
+    }
+
+    .ext-card h4 {
+      color: #fff;
+      margin-bottom: 0.35rem;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .ext-card p {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      flex-grow: 1;
+      margin-bottom: 0.7rem;
+    }
+
+    .ext-badge {
+      display: inline-block;
+      padding: 0.22rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: rgba(0, 122, 204, 0.18);
+      color: var(--light-blue);
+      border: 1px solid rgba(0, 122, 204, 0.3);
+      margin-bottom: 0.45rem;
+      align-self: center;
+    }
+
+    .ext-stars {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      font-size: 0.7rem;
+      color: var(--yellow);
+    }
+
+    .ext-stars span {
+      color: var(--text-muted);
+      margin-inline-start: 0.2rem;
+    }
+
+    /* ===== الاختصارات ===== */
+    .shortcuts-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.4rem;
+    }
+
+    .shortcut-group {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      padding: 1.4rem;
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition);
+    }
+
+    .shortcut-group:hover {
+      border-color: rgba(0, 122, 204, 0.3);
+    }
+
+    .shortcut-group-title {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1.1rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .shortcut-group-title i {
+      color: var(--primary-blue);
+      font-size: 1.15rem;
+    }
+
+    .shortcut-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(60, 60, 60, 0.5);
+      transition: var(--transition-fast);
+    }
+
+    .shortcut-item:last-child {
+      border-bottom: none;
+    }
+
+    .shortcut-item:hover {
+      padding-inline-end: 0.4rem;
+    }
+
+    .shortcut-desc {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .shortcut-keys {
+      display: flex;
+      gap: 0.22rem;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #3c3c3c, #2d2d2d);
+      border-radius: 6px;
+      padding: 0.18rem 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--yellow);
+      border: 1px solid #555;
+      box-shadow: 0 2px 0 #1a1a1a, 0 3px 6px rgba(0, 0, 0, 0.3);
+      min-width: 24px;
+      font-weight: 500;
+      direction: ltr;
+    }
+
+    /* ===== الفوتر ===== */
+    .footer {
+      background: var(--bg-deep);
+      border-top: 1px solid var(--border-subtle);
+      padding: 2rem 0 1.2rem;
+      padding-bottom: calc(1.2rem + var(--safe-bottom));
+      position: relative;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+      gap: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      margin-top: 0.7rem;
+      font-size: 0.82rem;
+      max-width: 320px;
+      line-height: 1.65;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.55rem;
+      margin-top: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .footer-social a:hover {
+      background: var(--primary-blue);
+      color: #fff;
+      border-color: var(--primary-blue);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px var(--primary-blue-glow);
+    }
+
+    .footer-col h4 {
+      color: #fff;
+      font-size: 0.92rem;
+      margin-bottom: 0.85rem;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 0.45rem;
+    }
+
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      inset-inline-start: 0;
+      width: 24px;
+      height: 2px;
+      background: var(--primary-blue);
+      border-radius: 2px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 0.45rem;
+    }
+
+    .footer-col ul a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .footer-col ul a i {
+      font-size: 0.6rem;
+      opacity: 0;
+      transition: var(--transition-fast);
+      transform: translateX(5px);
+    }
+
+    [dir="ltr"] .footer-col ul a i {
+      transform: translateX(-5px) rotate(180deg);
+    }
+
+    .footer-col ul a:hover {
+      color: var(--light-blue);
+      padding-inline-start: 4px;
+    }
+
+    .footer-col ul a:hover i {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    [dir="ltr"] .footer-col ul a:hover i {
+      transform: translateX(0) rotate(180deg);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1.1rem;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.7;
+    }
+
+    .footer-bottom a {
+      color: var(--light-blue);
+      text-decoration: none;
+    }
+
+    .engineer-credit {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--light-blue);
+      font-weight: 700;
+      margin-top: 0.7rem;
+      padding: 0.5rem 1.1rem;
+      background: linear-gradient(135deg, rgba(0, 122, 204, 0.18), rgba(156, 220, 254, 0.1));
+      border-radius: 40px;
+      border: 1px solid rgba(0, 122, 204, 0.35);
+      font-size: 0.85rem;
+      box-shadow: 0 4px 15px rgba(0, 122, 204, 0.15);
+    }
+
+    .engineer-credit i {
+      color: var(--primary-blue);
+      font-size: 0.9rem;
+    }
+
+    /* ===== زر العودة للأعلى ===== */
+    .back-to-top {
+      position: fixed;
+      bottom: calc(1.2rem + var(--safe-bottom));
+      inset-inline-end: calc(1.2rem + var(--safe-right));
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--primary-blue);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      box-shadow: 0 6px 20px var(--primary-blue-glow);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: var(--transition);
+      z-index: 999;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: var(--primary-blue-light);
+      transform: translateY(-4px);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.2, 0, 0, 1), transform 0.7s cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+
+    /* ============================================
+       استعلامات الوسائط
+    ============================================ */
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .interface-grid {
+        grid-template-columns: 1fr;
+        gap: 2.2rem;
+      }
+
+      .hero-visual {
+        order: -1;
+        max-width: 560px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .shortcuts-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-badge {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-stats {
+        justify-content: center;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 900px) {
+      /* إخفاء زر اللغة من الشريط العلوي على الموبايل */
+      .lang-desktop {
+        display: none;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: calc(100% + 1px);
+        inset-inline: 0;
+        background: rgba(24, 24, 24, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0.3rem;
+        border-bottom: 1px solid var(--border-subtle);
+        box-shadow: var(--shadow-md);
+        align-items: stretch;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 0.85rem 1rem;
+        text-align: start;
+        width: 100%;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .nav-links a:hover {
+        background: rgba(0, 122, 204, 0.15);
+      }
+
+      .nav-cta {
+        justify-content: center !important;
+        margin-top: 0.3rem;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+      }
+
+      /* إظهار خيار اللغة داخل القائمة الجانبية */
+      .lang-mobile-item {
+        display: block;
+      }
+
+      .footer {
+        padding: 1.5rem 0 1rem;
+      }
+
+      .footer-grid {
+        gap: 1.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .footer-brand p {
+        font-size: 0.78rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+        padding-right: calc(1rem + var(--safe-right));
+        padding-left: calc(1rem + var(--safe-left));
+      }
+
+      .section {
+        padding: 2.5rem 0;
+      }
+
+      .hero {
+        padding: 2rem 0 1.8rem;
+      }
+
+      .hero-stats {
+        gap: 1rem;
+        justify-content: space-around;
+        width: 100%;
+      }
+
+      .stat-item {
+        align-items: center;
+        text-align: center;
+        flex: 1;
+        min-width: 70px;
+      }
+
+      .stat-value {
+        font-size: 1.15rem;
+      }
+
+      .stat-label {
+        font-size: 0.7rem;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.6rem;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .interface-item:hover {
+        transform: translateX(0) scale(1.01);
+      }
+
+      [dir="ltr"] .interface-item:hover {
+        transform: translateX(0) scale(1.01);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .footer-brand p {
+        max-width: 100%;
+      }
+
+      .footer-col h4 {
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.4rem;
+        font-size: 0.88rem;
+      }
+
+      .footer-col ul li {
+        margin-bottom: 0.35rem;
+      }
+
+      .footer-col ul a {
+        font-size: 0.78rem;
+      }
+
+      .mock-sidebar {
+        width: 95px;
+        padding: 0.5rem;
+      }
+
+      .mock-sidebar-item {
+        font-size: 0.62rem;
+      }
+
+      .shortcut-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.45rem;
+        padding: 0.8rem 0;
+      }
+
+      .shortcut-keys {
+        justify-content: flex-start;
+      }
+
+      .code-body {
+        padding: 0.9rem;
+        font-size: 0.7rem;
+      }
+
+      .code-line {
+        gap: 0.5rem;
+      }
+
+      .back-to-top {
+        width: 40px;
+        height: 40px;
+        bottom: calc(1rem + var(--safe-bottom));
+        inset-inline-end: calc(1rem + var(--safe-right));
+        font-size: 0.9rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.9rem;
+      }
+
+      .feature-card {
+        padding: 1.4rem 0.9rem;
+      }
+
+      .feature-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .feature-card h3 {
+        font-size: 0.95rem;
+      }
+
+      .feature-card p {
+        font-size: 0.78rem;
+      }
+
+      .extensions-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.9rem;
+      }
+
+      .ext-card {
+        padding: 1.2rem 0.85rem;
+      }
+
+      .ext-icon {
+        font-size: 1.7rem;
+        margin-bottom: 0.65rem;
+      }
+
+      .ext-card h4 {
+        font-size: 0.92rem;
+      }
+
+      .ext-card p {
+        font-size: 0.75rem;
+      }
+
+      .ext-badge {
+        font-size: 0.62rem;
+        padding: 0.2rem 0.6rem;
+      }
+
+      .ext-stars {
+        font-size: 0.65rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 0.9rem;
+        padding-right: calc(0.9rem + var(--safe-right));
+        padding-left: calc(0.9rem + var(--safe-left));
+      }
+
+      .section {
+        padding: 2rem 0;
+      }
+
+      .section-title {
+        gap: 0.5rem;
+        font-size: 1.35rem;
+      }
+
+      .section-title i {
+        padding: 0.35rem;
+        font-size: 0.8em;
+      }
+
+      .section-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .logo {
+        font-size: 0.95rem;
+        gap: 0.4rem;
+      }
+
+      .logo-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+      }
+
+      .mobile-menu-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+      }
+
+      .hero-content h1 {
+        font-size: 1.6rem;
+      }
+
+      .hero-content p {
+        font-size: 0.88rem;
+        line-height: 1.7;
+      }
+
+      .hero-badge {
+        font-size: 0.72rem;
+        padding: 0.35rem 0.8rem;
+      }
+
+      .hero-stats {
+        gap: 0.5rem;
+      }
+
+      .stat-value {
+        font-size: 1rem;
+      }
+
+      .stat-label {
+        font-size: 0.65rem;
+      }
+
+      .btn {
+        padding: 0.75rem 1.3rem;
+        font-size: 0.88rem;
+        min-height: 44px;
+      }
+
+      .btn-lg {
+        padding: 0.85rem 1.5rem;
+        font-size: 0.92rem;
+      }
+
+      .code-window {
+        border-radius: 10px;
+      }
+
+      .code-header {
+        padding: 0.55rem 0.7rem;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+      }
+
+      .code-filename {
+        font-size: 0.65rem;
+      }
+
+      .code-body {
+        padding: 0.8rem;
+        font-size: 0.65rem;
+      }
+
+      .line-num {
+        font-size: 0.62rem;
+        min-width: 12px;
+      }
+
+      .mock-activity-bar {
+        width: 32px;
+        font-size: 0.8rem;
+        gap: 0.55rem;
+        padding: 0.5rem 0;
+      }
+
+      .mock-sidebar {
+        width: 80px;
+        padding: 0.45rem;
+      }
+
+      .mock-sidebar-title {
+        font-size: 0.52rem;
+      }
+
+      .mock-sidebar-item {
+        font-size: 0.58rem;
+      }
+
+      .mock-editor-area {
+        padding: 0.55rem;
+      }
+
+      .mock-code-content {
+        font-size: 0.58rem;
+      }
+
+      .mock-tabs {
+        font-size: 0.55rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .mock-tab {
+        padding: 0.18rem 0.42rem;
+      }
+
+      .mock-panel {
+        font-size: 0.55rem;
+        gap: 0.6rem;
+        padding: 0.35rem 0.55rem;
+      }
+
+      .mock-status-bar {
+        font-size: 0.52rem;
+        padding: 0.2rem 0.5rem;
+      }
+
+      .interface-diagram {
+        padding: 0.7rem;
+      }
+
+      .interface-icon {
+        min-width: 34px;
+        width: 34px;
+        height: 34px;
+        font-size: 0.9rem;
+      }
+
+      .interface-item {
+        padding: 0.85rem;
+        gap: 0.7rem;
+      }
+
+      .interface-item h4 {
+        font-size: 0.88rem;
+      }
+
+      .interface-item p {
+        font-size: 0.76rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.7rem;
+      }
+
+      .feature-card {
+        padding: 1.1rem 0.7rem;
+      }
+
+      .feature-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.15rem;
+        border-radius: 12px;
+        margin-bottom: 0.7rem;
+      }
+
+      .feature-card h3 {
+        font-size: 0.85rem;
+      }
+
+      .feature-card p {
+        font-size: 0.72rem;
+        line-height: 1.5;
+      }
+
+      .extensions-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.7rem;
+      }
+
+      .ext-card {
+        padding: 1rem 0.7rem;
+        border-radius: 12px;
+      }
+
+      .ext-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .ext-card h4 {
+        font-size: 0.82rem;
+      }
+
+      .ext-card p {
+        font-size: 0.7rem;
+        line-height: 1.5;
+      }
+
+      .ext-badge {
+        font-size: 0.58rem;
+        padding: 0.18rem 0.5rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .ext-stars {
+        font-size: 0.6rem;
+      }
+
+      .shortcut-group {
+        padding: 1.1rem;
+        border-radius: 12px;
+      }
+
+      .shortcut-group-title {
+        font-size: 0.92rem;
+        gap: 0.45rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .shortcut-desc {
+        font-size: 0.8rem;
+      }
+
+      kbd {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.4rem;
+        min-width: 22px;
+      }
+
+      .footer {
+        padding: 1.2rem 0 0.9rem;
+      }
+
+      .footer-grid {
+        gap: 1rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .footer-social a {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+      }
+
+      .footer-col h4 {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-col ul li {
+        margin-bottom: 0.3rem;
+      }
+
+      .footer-col ul a {
+        font-size: 0.76rem;
+      }
+
+      .footer-bottom {
+        padding-top: 0.9rem;
+        font-size: 0.72rem;
+      }
+
+      .engineer-credit {
+        font-size: 0.76rem;
+        padding: 0.42rem 0.95rem;
+        margin-top: 0.6rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .container {
+        padding: 0 0.75rem;
+      }
+
+      .mock-sidebar {
+        display: none;
+      }
+
+      .mock-activity-bar {
+        width: 30px;
+      }
+
+      .hero-content h1 {
+        font-size: 1.4rem;
+      }
+
+      .stat-value {
+        font-size: 0.92rem;
+      }
+
+      .stat-label {
+        font-size: 0.6rem;
+      }
+
+      .btn {
+        font-size: 0.82rem;
+        padding: 0.7rem 1.1rem;
+      }
+
+      .features-grid,
+      .extensions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card,
+      .ext-card {
+        padding: 1.1rem 0.9rem;
+      }
+
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+      }
+
+      .code-body {
+        font-size: 0.6rem;
+        padding: 0.65rem;
+      }
+    }
+
+    @media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
+      .hero {
+        padding: 1.5rem 0;
+      }
+
+      .hero-content h1 {
+        font-size: 1.5rem;
+      }
+
+      .section {
+        padding: 1.8rem 0;
+      }
+
+      .navbar {
+        padding: 0.4rem 0;
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-main);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #3c3c3c;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-blue);
+    }
+
+    @media (hover: none) {
+      .btn:hover {
+        transform: none;
+      }
+
+      .card:hover,
+      .feature-card:hover,
+      .ext-card:hover,
+      .interface-item:hover {
+        transform: none;
+      }
+    }
+
+    section, header, footer, nav, div {
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== شريط التنقل ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">
+        <span class="logo-icon"><i class="fas fa-code"></i></span>
+        <span>VS Code</span>
+      </a>
+
+      <div class="nav-right">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#interface" data-i18n="nav.interface">الواجهة</a></li>
+          <li><a href="#features" data-i18n="nav.features">الميزات</a></li>
+          <li><a href="#extensions" data-i18n="nav.extensions">الامتدادات</a></li>
+          <li><a href="#shortcuts" data-i18n="nav.shortcuts">الاختصارات</a></li>
+          <li>
+            <a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener noreferrer" class="nav-cta">
+              <i class="fas fa-download"></i> <span data-i18n="nav.download">تحميل</span>
+            </a>
+          </li>
+
+          <!-- ✅ خيار اللغة داخل القائمة الجانبية (يظهر فقط على الموبايل) -->
+          <li class="lang-mobile-item">
+            <div class="lang-title">
+              <i class="fas fa-globe"></i>
+              <span data-i18n="lang.choose">اختر اللغة</span>
+            </div>
+            <div class="lang-mobile-options">
+              <button class="lang-mobile-option active" data-lang="ar">
+                <span class="lang-flag">🇸🇦</span>
+                <span class="lang-name-text">العربية</span>
+                <i class="fas fa-check check-icon"></i>
+              </button>
+              <button class="lang-mobile-option" data-lang="en">
+                <span class="lang-flag">🇬🇧</span>
+                <span class="lang-name-text">English</span>
+                <i class="fas fa-check check-icon"></i>
+              </button>
+              <button class="lang-mobile-option" data-lang="fr">
+                <span class="lang-flag">🇫🇷</span>
+                <span class="lang-name-text">Français</span>
+                <i class="fas fa-check check-icon"></i>
+              </button>
+              <button class="lang-mobile-option" data-lang="tr">
+                <span class="lang-flag">🇹🇷</span>
+                <span class="lang-name-text">Türkçe</span>
+                <i class="fas fa-check check-icon"></i>
+              </button>
+              <button class="lang-mobile-option" data-lang="es">
+                <span class="lang-flag">🇪🇸</span>
+                <span class="lang-name-text">Español</span>
+                <i class="fas fa-check check-icon"></i>
+              </button>
+            </div>
+          </li>
+        </ul>
+
+        <!-- ✅ زر اللغة للديسكتوب (زر صغير في الشريط العلوي) -->
+        <div class="lang-desktop" id="langDesktop">
+          <button class="lang-btn" id="langBtn" aria-label="تغيير اللغة" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-globe"></i>
+            <span class="lang-name" id="currentLangName">العربية</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="lang-dropdown-desktop" role="menu">
+            <button class="lang-option active" data-lang="ar" role="menuitem">
+              <span class="lang-flag">🇸🇦</span>
+              <span class="lang-name-text">العربية</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+            <button class="lang-option" data-lang="en" role="menuitem">
+              <span class="lang-flag">🇬🇧</span>
+              <span class="lang-name-text">English</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+            <button class="lang-option" data-lang="fr" role="menuitem">
+              <span class="lang-flag">🇫🇷</span>
+              <span class="lang-name-text">Français</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+            <button class="lang-option" data-lang="tr" role="menuitem">
+              <span class="lang-flag">🇹🇷</span>
+              <span class="lang-name-text">Türkçe</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+            <button class="lang-option" data-lang="es" role="menuitem">
+              <span class="lang-flag">🇪🇸</span>
+              <span class="lang-name-text">Español</span>
+              <i class="fas fa-check check-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <button class="mobile-menu-btn" id="menuBtn" aria-label="فتح القائمة">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== قسم البطل ===== -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content fade-in">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+          <span data-i18n="hero.badge">الإصدار 1.95 متاح الآن</span>
+        </div>
+        <h1>
+          <span data-i18n="hero.title1">أتقن</span> <span class="gradient-text">VS Code</span><br>
+          <span data-i18n="hero.title2">محرر الأكواد الأقوى</span>
+        </h1>
+        <p data-i18n="hero.description">
+          Visual Studio Code هو محرر أكواد مجاني ومفتوح المصدر من مايكروسوفت، يجمع بين بساطة المحرر النصي وقوة بيئة التطوير المتكاملة.
+        </p>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-value">+70M</span>
+            <span class="stat-label" data-i18n="hero.stat1">مستخدم شهرياً</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">+50K</span>
+            <span class="stat-label" data-i18n="hero.stat2">امتداد متاح</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">4.9★</span>
+            <span class="stat-label" data-i18n="hero.stat3">تقييم المستخدمين</span>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+            <i class="fas fa-download"></i> <span data-i18n="hero.ctaDownload">تحميل الآن مجاناً</span>
+          </a>
+          <a href="#interface" class="btn btn-outline btn-lg">
+            <i class="fas fa-play-circle"></i> <span data-i18n="hero.ctaExplore">استكشف الميزات</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual fade-in fade-in-delay-2">
+        <div class="code-window">
+          <div class="code-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="code-filename">index.html</span>
+          </div>
+          <div class="code-body">
+            <div class="code-line">
+              <span class="line-num">1</span>
+              <span><span class="comment">&lt;!-- Welcome --&gt;</span></span>
+            </div>
+            <div class="code-line">
+              <span class="line-num">2</span>
+              <span><span class="tag">&lt;div</span> <span class="attr">class</span><span class="op">=</span><span class="str">"editor"</span><span class="tag">&gt;</span></span>
+            </div>
+            <div class="code-line">
+              <span class="line-num">3</span>
+              <span style="padding-left:1.2rem;"><span class="tag">&lt;h1&gt;</span>Hello<span class="tag">&lt;/h1&gt;</span></span>
+            </div>
+            <div class="code-line">
+              <span class="line-num">4</span>
+              <span style="padding-left:1.2rem;"><span class="tag">&lt;p&gt;</span>Start coding<span class="tag">&lt;/p&gt;</span></span>
+            </div>
+            <div class="code-line">
+              <span class="line-num">5</span>
+              <span><span class="tag">&lt;/div&gt;</span></span>
+            </div>
+            <div class="code-line">
+              <span class="line-num">6</span>
+              <span></span>
+            </div>
+            <div class="code-line">
+              <span class="line-num">7</span>
+              <span><span class="keyword">const</span> <span class="func">greet</span> <span class="op">=</span> () <span class="op">=&gt;</span> {</span>
+            </div>
+            <div class="code-line">
+              <span class="line-num">8</span>
+              <span style="padding-left:1.2rem;"><span class="func">console</span>.<span class="func">log</span>(<span class="str">"VS Code ❤️"</span>);</span>
+            </div>
+            <div class="code-line">
+              <span class="line-num">9</span>
+              <span>};<span class="cursor-blink"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== قسم الواجهة ===== -->
+  <section class="section" id="interface">
+    <div class="container">
+      <h2 class="section-title fade-in">
+        <i class="fas fa-th-large"></i> <span data-i18n="interface.title">فهم واجهة VS Code</span>
+      </h2>
+      <p class="section-subtitle fade-in" data-i18n="interface.subtitle">
+        تنقسم الواجهة إلى خمس مناطق رئيسية، كل منها مصمم لتمنحك تجربة تطوير سلسة.
+      </p>
+
+      <div class="interface-grid">
+        <div class="interface-diagram fade-in">
+          <div class="mock-editor">
+            <div class="mock-top">
+              <div class="mock-activity-bar">
+                <i class="fas fa-files active"></i>
+                <i class="fas fa-search"></i>
+                <i class="fas fa-code-branch"></i>
+                <i class="fas fa-bug"></i>
+                <i class="fas fa-puzzle-piece"></i>
+              </div>
+              <div class="mock-main">
+                <div class="mock-sidebar">
+                  <div class="mock-sidebar-title">EXPLORER</div>
+                  <div class="mock-sidebar-item"><i class="fas fa-folder" style="color:#dcb67a;"></i> src</div>
+                  <div class="mock-sidebar-item" style="padding-left:0.7rem;"><i class="fas fa-file-code" style="color:#e44d26;"></i> index.html</div>
+                  <div class="mock-sidebar-item" style="padding-left:0.7rem;"><i class="fas fa-file-code" style="color:#264de4;"></i> style.css</div>
+                  <div class="mock-sidebar-item" style="padding-left:0.7rem;"><i class="fas fa-file-code" style="color:#f7df1e;"></i> app.js</div>
+                </div>
+                <div class="mock-editor-area">
+                  <div class="mock-tabs">
+                    <span class="mock-tab active">index.html</span>
+                    <span class="mock-tab">style.css</span>
+                  </div>
+                  <div class="mock-code-content">
+                    <div><span class="comment">&lt;!-- Editor --&gt;</span></div>
+                    <div><span class="tag">&lt;h1&gt;</span>Hello<span class="tag">&lt;/h1&gt;</span></div>
+                    <div><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"box"</span><span class="tag">&gt;</span></div>
+                    <div style="padding-left:0.7rem;"><span class="tag">&lt;p&gt;</span>VS Code<span class="tag">&lt;/p&gt;</span></div>
+                    <div><span class="tag">&lt;/div&gt;</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mock-panel">
+              <span>Terminal</span>
+              <span>Problems</span>
+              <span>Output</span>
+            </div>
+            <div class="mock-status-bar">
+              <span><i class="fas fa-code-branch"></i> main*</span>
+              <span>UTF-8</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="interface-list">
+          <div class="interface-item fade-in">
+            <div class="interface-icon"><i class="fas fa-bars"></i></div>
+            <div>
+              <h4 data-i18n="interface.item1.title">شريط النشاط (Activity Bar)</h4>
+              <p data-i18n="interface.item1.desc">على أقصى اليسار، يوفر وصولاً سريعاً للمستكشف، البحث، Git، والتصحيح.</p>
+            </div>
+          </div>
+          <div class="interface-item fade-in fade-in-delay-1">
+            <div class="interface-icon"><i class="fas fa-columns"></i></div>
+            <div>
+              <h4 data-i18n="interface.item2.title">الشريط الجانبي (Sidebar)</h4>
+              <p data-i18n="interface.item2.desc">يعرض محتويات المجلد، نتائج البحث، تفاصيل Git، ونقاط التوقف.</p>
+            </div>
+          </div>
+          <div class="interface-item fade-in fade-in-delay-2">
+            <div class="interface-icon"><i class="fas fa-file-code"></i></div>
+            <div>
+              <h4 data-i18n="interface.item3.title">منطقة المحرر (Editor Area)</h4>
+              <p data-i18n="interface.item3.desc">القلب النابض، حيث تكتب الأكواد مع التلوين والإكمال التلقائي.</p>
+            </div>
+          </div>
+          <div class="interface-item fade-in fade-in-delay-3">
+            <div class="interface-icon"><i class="fas fa-terminal"></i></div>
+            <div>
+              <h4 data-i18n="interface.item4.title">اللوحة السفلية (Panel)</h4>
+              <p data-i18n="interface.item4.desc">تحتوي على الطرفية المدمجة، المشكلات، والإخراج.</p>
+            </div>
+          </div>
+          <div class="interface-item fade-in">
+            <div class="interface-icon"><i class="fas fa-info-circle"></i></div>
+            <div>
+              <h4 data-i18n="interface.item5.title">شريط الحالة (Status Bar)</h4>
+              <p data-i18n="interface.item5.desc">يعرض الفرع الحالي، ترميز الملف، لغة البرمجة، وحالة Git.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== الميزات ===== -->
+  <section class="section" id="features" style="background: var(--bg-elevated);">
+    <div class="container">
+      <h2 class="section-title fade-in">
+        <i class="fas fa-star"></i> <span data-i18n="features.title">الميزات الرئيسية</span>
+      </h2>
+      <p class="section-subtitle fade-in" data-i18n="features.subtitle">
+        كل ما تحتاجه لتطوير أسرع وأذكى، مدمج مباشرة في المحرر.
+      </p>
+
+      <div class="features-grid">
+        <div class="card feature-card fade-in">
+          <div class="feature-icon"><i class="fas fa-magic"></i></div>
+          <h3 data-i18n="features.f1.title">IntelliSense</h3>
+          <p data-i18n="features.f1.desc">إكمال تلقائي ذكي وتوثيق مباشر للدوال والمكتبات.</p>
+        </div>
+        <div class="card feature-card fade-in fade-in-delay-1">
+          <div class="feature-icon"><i class="fab fa-git-alt"></i></div>
+          <h3 data-i18n="features.f2.title">Git مدمج</h3>
+          <p data-i18n="features.f2.desc">تحكم كامل بالإصدارات دون مغادرة المحرر.</p>
+        </div>
+        <div class="card feature-card fade-in fade-in-delay-2">
+          <div class="feature-icon"><i class="fas fa-bug"></i></div>
+          <h3 data-i18n="features.f3.title">تصحيح الأخطاء</h3>
+          <p data-i18n="features.f3.desc">نقاط توقف وتتبع المتغيرات خطوة بخطوة.</p>
+        </div>
+        <div class="card feature-card fade-in">
+          <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+          <h3 data-i18n="features.f4.title">Emmet</h3>
+          <p data-i18n="features.f4.desc">كتابة HTML و CSS بسرعة فائقة.</p>
+        </div>
+        <div class="card feature-card fade-in fade-in-delay-1">
+          <div class="feature-icon"><i class="fas fa-puzzle-piece"></i></div>
+          <h3 data-i18n="features.f5.title">امتدادات لا محدودة</h3>
+          <p data-i18n="features.f5.desc">آلاف الإضافات لتخصيص المحرر.</p>
+        </div>
+        <div class="card feature-card fade-in fade-in-delay-2">
+          <div class="feature-icon"><i class="fas fa-terminal"></i></div>
+          <h3 data-i18n="features.f6.title">طرفية مدمجة</h3>
+          <p data-i18n="features.f6.desc">شغّل الأوامر دون مغادرة المحرر.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== الامتدادات ===== -->
+  <section class="section" id="extensions">
+    <div class="container">
+      <h2 class="section-title fade-in">
+        <i class="fas fa-cubes"></i> <span data-i18n="extensions.title">أفضل الامتدادات</span>
+      </h2>
+      <p class="section-subtitle fade-in" data-i18n="extensions.subtitle">
+        امتدادات لا غنى عنها لتسريع سير العمل وتحسين جودة الكود.
+      </p>
+
+      <div class="extensions-grid">
+        <div class="ext-card fade-in">
+          <div class="ext-icon"><i class="fas fa-paint-roller"></i></div>
+          <h4>Prettier</h4>
+          <p data-i18n="extensions.e1.desc">تنسيق تلقائي للكود وفق معايير موحدة.</p>
+          <span class="ext-badge" data-i18n="extensions.e1.badge">الأكثر تحميلاً</span>
+          <div class="ext-stars">★★★★★ <span>(4.9)</span></div>
+        </div>
+        <div class="ext-card fade-in fade-in-delay-1">
+          <div class="ext-icon"><i class="fas fa-globe"></i></div>
+          <h4>Live Server</h4>
+          <p data-i18n="extensions.e2.desc">خادم محلي مع إعادة تحميل فورية.</p>
+          <span class="ext-badge" data-i18n="extensions.e2.badge">تطوير الويب</span>
+          <div class="ext-stars">★★★★★ <span>(4.8)</span></div>
+        </div>
+        <div class="ext-card fade-in fade-in-delay-2">
+          <div class="ext-icon"><i class="fas fa-check-double"></i></div>
+          <h4>ESLint</h4>
+          <p data-i18n="extensions.e3.desc">كشف الأخطاء البرمجية وتوحيد الأسلوب.</p>
+          <span class="ext-badge" data-i18n="extensions.e3.badge">جودة الكود</span>
+          <div class="ext-stars">★★★★☆ <span>(4.7)</span></div>
+        </div>
+        <div class="ext-card fade-in">
+          <div class="ext-icon"><i class="fas fa-robot"></i></div>
+          <h4>GitHub Copilot</h4>
+          <p data-i18n="extensions.e4.desc">مساعد برمجي بالذكاء الاصطناعي.</p>
+          <span class="ext-badge" data-i18n="extensions.e4.badge">ذكاء اصطناعي</span>
+          <div class="ext-stars">★★★★★ <span>(4.9)</span></div>
+        </div>
+        <div class="ext-card fade-in fade-in-delay-1">
+          <div class="ext-icon"><i class="fas fa-code"></i></div>
+          <h4>Path Intellisense</h4>
+          <p data-i18n="extensions.e5.desc">إكمال تلقائي لمسارات الملفات.</p>
+          <span class="ext-badge" data-i18n="extensions.e5.badge">إنتاجية</span>
+          <div class="ext-stars">★★★★☆ <span>(4.6)</span></div>
+        </div>
+        <div class="ext-card fade-in fade-in-delay-2">
+          <div class="ext-icon"><i class="fas fa-palette"></i></div>
+          <h4>Material Theme</h4>
+          <p data-i18n="extensions.e6.desc">سمات ألوان احترافية للمحرر.</p>
+          <span class="ext-badge" data-i18n="extensions.e6.badge">تخصيص</span>
+          <div class="ext-stars">★★★★★ <span>(4.8)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== الاختصارات ===== -->
+  <section class="section" id="shortcuts" style="background: var(--bg-elevated);">
+    <div class="container">
+      <h2 class="section-title fade-in">
+        <i class="fas fa-keyboard"></i> <span data-i18n="shortcuts.title">اختصارات لوحة المفاتيح</span>
+      </h2>
+      <p class="section-subtitle fade-in" data-i18n="shortcuts.subtitle">
+        أهم الاختصارات لنظامي Windows / Linux و macOS لتسريع عملك.
+      </p>
+
+      <div class="shortcuts-wrapper">
+        <div class="shortcut-group fade-in">
+          <div class="shortcut-group-title">
+            <i class="fab fa-windows"></i>
+            <span>Windows / Linux</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s1">لوحة الأوامر</span>
+            <span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s2">البحث في الملفات</span>
+            <span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>P</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s3">البحث والاستبدال</span>
+            <span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>H</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s4">فتح الطرفية</span>
+            <span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>`</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s5">تعليق / إلغاء تعليق</span>
+            <span class="shortcut-keys"><kbd>Ctrl</kbd><kbd>/</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s6">نسخ السطر الحالي</span>
+            <span class="shortcut-keys"><kbd>Shift</kbd><kbd>Alt</kbd><kbd>↓</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s7">نقل السطر لأعلى/أسفل</span>
+            <span class="shortcut-keys"><kbd>Alt</kbd><kbd>↑</kbd><kbd>↓</kbd></span>
+          </div>
+        </div>
+
+        <div class="shortcut-group fade-in fade-in-delay-1">
+          <div class="shortcut-group-title">
+            <i class="fab fa-apple"></i>
+            <span>macOS</span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s1">لوحة الأوامر</span>
+            <span class="shortcut-keys"><kbd>⌘</kbd><kbd>Shift</kbd><kbd>P</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s2">البحث في الملفات</span>
+            <span class="shortcut-keys"><kbd>⌘</kbd><kbd>P</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s3">البحث والاستبدال</span>
+            <span class="shortcut-keys"><kbd>⌘</kbd><kbd>⌥</kbd><kbd>F</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s4">فتح الطرفية</span>
+            <span class="shortcut-keys"><kbd>⌘</kbd><kbd>`</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s5">تعليق / إلغاء تعليق</span>
+            <span class="shortcut-keys"><kbd>⌘</kbd><kbd>/</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s6">نسخ السطر الحالي</span>
+            <span class="shortcut-keys"><kbd>Shift</kbd><kbd>⌥</kbd><kbd>↓</kbd></span>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-desc" data-i18n="shortcuts.s7">نقل السطر لأعلى/أسفل</span>
+            <span class="shortcut-keys"><kbd>⌥</kbd><kbd>↑</kbd><kbd>↓</kbd></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== الفوتر ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo" style="font-size:1.05rem;">
+            <span class="logo-icon"><i class="fas fa-code"></i></span>
+            <span>VS Code</span>
+          </a>
+          <p data-i18n="footer.brandDesc">محرر الأكواد مفتوح المصدر الأكثر شعبية في العالم. مجاني بالكامل ويعمل على جميع المنصات.</p>
+          <div class="footer-social">
+            <a href="https://github.com/microsoft/vscode" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://twitter.com/code" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com/@code" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://stackoverflow.com/questions/tagged/visual-studio-code" target="_blank" rel="noopener noreferrer" aria-label="Stack Overflow"><i class="fab fa-stack-overflow"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.resources">مصادر رسمية</h4>
+          <ul>
+            <li><a href="https://code.visualstudio.com/docs" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-left"></i> <span data-i18n="footer.docs">التوثيق الرسمي</span></a></li>
+            <li><a href="https://code.visualstudio.com/updates" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-left"></i> <span data-i18n="footer.updates">آخر التحديثات</span></a></li>
+            <li><a href="https://code.visualstudio.com/api" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-left"></i> <span data-i18n="footer.api">API الامتدادات</span></a></li>
+            <li><a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-left"></i> <span data-i18n="footer.downloadPage">صفحة التحميل</span></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.community">المجتمع</h4>
+          <ul>
+            <li><a href="https://github.com/microsoft/vscode" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-left"></i> GitHub</a></li>
+            <li><a href="https://stackoverflow.com/questions/tagged/visual-studio-code" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-left"></i> Stack Overflow</a></li>
+            <li><a href="https://twitter.com/code" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-left"></i> Twitter / X</a></li>
+            <li><a href="https://dev.to/t/vscode" target="_blank" rel="noopener noreferrer"><i class="fas fa-chevron-left"></i> Dev Community</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer.quickLinks">روابط سريعة</h4>
+          <ul>
+            <li><a href="#interface"><i class="fas fa-chevron-left"></i> <span data-i18n="nav.interface">الواجهة</span></a></li>
+            <li><a href="#features"><i class="fas fa-chevron-left"></i> <span data-i18n="nav.features">الميزات</span></a></li>
+            <li><a href="#extensions"><i class="fas fa-chevron-left"></i> <span data-i18n="nav.extensions">الامتدادات</span></a></li>
+            <li><a href="#shortcuts"><i class="fas fa-chevron-left"></i> <span data-i18n="nav.shortcuts">الاختصارات</span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer.copyright">© 2026 دليل VS Code الشامل — جميع الحقوق محفوظة.</p>
+        <p style="margin-top:0.35rem;">
+          <span data-i18n="footer.trademark">VS Code علامة تجارية لشركة Microsoft</span> —
+          <a href="https://code.visualstudio.com/Download" target="_blank" rel="noopener noreferrer" data-i18n="footer.downloadNow">حمّل الآن من الموقع الرسمي</a>
+        </p>
+        <div class="engineer-credit">
+          <i class="fas fa-code"></i>
+          <span data-i18n="engineer.credit">إعداد المهندس عامر الديري</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+    (function() {
+      'use strict';
+
+      const translations = {
+        ar: {
+          'html.lang': 'ar', 'html.dir': 'rtl', 'langName': 'العربية',
+          'nav.interface': 'الواجهة', 'nav.features': 'الميزات',
+          'nav.extensions': 'الامتدادات', 'nav.shortcuts': 'الاختصارات', 'nav.download': 'تحميل',
+          'hero.badge': 'الإصدار 1.95 متاح الآن',
+          'hero.title1': 'أتقن', 'hero.title2': 'محرر الأكواد الأقوى',
+          'hero.description': 'Visual Studio Code هو محرر أكواد مجاني ومفتوح المصدر من مايكروسوفت، يجمع بين بساطة المحرر النصي وقوة بيئة التطوير المتكاملة.',
+          'hero.stat1': 'مستخدم شهرياً', 'hero.stat2': 'امتداد متاح', 'hero.stat3': 'تقييم المستخدمين',
+          'hero.ctaDownload': 'تحميل الآن مجاناً', 'hero.ctaExplore': 'استكشف الميزات',
+          'interface.title': 'فهم واجهة VS Code',
+          'interface.subtitle': 'تنقسم الواجهة إلى خمس مناطق رئيسية، كل منها مصمم لتمنحك تجربة تطوير سلسة.',
+          'interface.item1.title': 'شريط النشاط (Activity Bar)',
+          'interface.item1.desc': 'على أقصى اليسار، يوفر وصولاً سريعاً للمستكشف، البحث، Git، والتصحيح.',
+          'interface.item2.title': 'الشريط الجانبي (Sidebar)',
+          'interface.item2.desc': 'يعرض محتويات المجلد، نتائج البحث، تفاصيل Git، ونقاط التوقف.',
+          'interface.item3.title': 'منطقة المحرر (Editor Area)',
+          'interface.item3.desc': 'القلب النابض، حيث تكتب الأكواد مع التلوين والإكمال التلقائي.',
+          'interface.item4.title': 'اللوحة السفلية (Panel)',
+          'interface.item4.desc': 'تحتوي على الطرفية المدمجة، المشكلات، والإخراج.',
+          'interface.item5.title': 'شريط الحالة (Status Bar)',
+          'interface.item5.desc': 'يعرض الفرع الحالي، ترميز الملف، لغة البرمجة، وحالة Git.',
+          'features.title': 'الميزات الرئيسية',
+          'features.subtitle': 'كل ما تحتاجه لتطوير أسرع وأذكى، مدمج مباشرة في المحرر.',
+          'features.f1.title': 'IntelliSense', 'features.f1.desc': 'إكمال تلقائي ذكي وتوثيق مباشر للدوال والمكتبات.',
+          'features.f2.title': 'Git مدمج', 'features.f2.desc': 'تحكم كامل بالإصدارات دون مغادرة المحرر.',
+          'features.f3.title': 'تصحيح الأخطاء', 'features.f3.desc': 'نقاط توقف وتتبع المتغيرات خطوة بخطوة.',
+          'features.f4.title': 'Emmet', 'features.f4.desc': 'كتابة HTML و CSS بسرعة فائقة.',
+          'features.f5.title': 'امتدادات لا محدودة', 'features.f5.desc': 'آلاف الإضافات لتخصيص المحرر.',
+          'features.f6.title': 'طرفية مدمجة', 'features.f6.desc': 'شغّل الأوامر دون مغادرة المحرر.',
+          'extensions.title': 'أفضل الامتدادات',
+          'extensions.subtitle': 'امتدادات لا غنى عنها لتسريع سير العمل وتحسين جودة الكود.',
+          'extensions.e1.desc': 'تنسيق تلقائي للكود وفق معايير موحدة.', 'extensions.e1.badge': 'الأكثر تحميلاً',
+          'extensions.e2.desc': 'خادم محلي مع إعادة تحميل فورية.', 'extensions.e2.badge': 'تطوير الويب',
+          'extensions.e3.desc': 'كشف الأخطاء البرمجية وتوحيد الأسلوب.', 'extensions.e3.badge': 'جودة الكود',
+          'extensions.e4.desc': 'مساعد برمجي بالذكاء الاصطناعي.', 'extensions.e4.badge': 'ذكاء اصطناعي',
+          'extensions.e5.desc': 'إكمال تلقائي لمسارات الملفات.', 'extensions.e5.badge': 'إنتاجية',
+          'extensions.e6.desc': 'سمات ألوان احترافية للمحرر.', 'extensions.e6.badge': 'تخصيص',
+          'shortcuts.title': 'اختصارات لوحة المفاتيح',
+          'shortcuts.subtitle': 'أهم الاختصارات لنظامي Windows / Linux و macOS لتسريع عملك.',
+          'shortcuts.s1': 'لوحة الأوامر', 'shortcuts.s2': 'البحث في الملفات',
+          'shortcuts.s3': 'البحث والاستبدال', 'shortcuts.s4': 'فتح الطرفية',
+          'shortcuts.s5': 'تعليق / إلغاء تعليق', 'shortcuts.s6': 'نسخ السطر الحالي',
+          'shortcuts.s7': 'نقل السطر لأعلى/أسفل',
+          'engineer.credit': 'إعداد المهندس عامر الديري',
+          'footer.brandDesc': 'محرر الأكواد مفتوح المصدر الأكثر شعبية في العالم. مجاني بالكامل ويعمل على جميع المنصات.',
+          'footer.resources': 'مصادر رسمية', 'footer.docs': 'التوثيق الرسمي',
+          'footer.updates': 'آخر التحديثات', 'footer.api': 'API الامتدادات',
+          'footer.downloadPage': 'صفحة التحميل', 'footer.community': 'المجتمع',
+          'footer.quickLinks': 'روابط سريعة',
+          'footer.copyright': '© 2026 دليل VS Code الشامل — جميع الحقوق محفوظة.',
+          'footer.trademark': 'VS Code علامة تجارية لشركة Microsoft',
+          'footer.downloadNow': 'حمّل الآن من الموقع الرسمي',
+          'lang.choose': 'اختر اللغة'
+        },
+        en: {
+          'html.lang': 'en', 'html.dir': 'ltr', 'langName': 'English',
+          'nav.interface': 'Interface', 'nav.features': 'Features',
+          'nav.extensions': 'Extensions', 'nav.shortcuts': 'Shortcuts', 'nav.download': 'Download',
+          'hero.badge': 'Version 1.95 available now',
+          'hero.title1': 'Master', 'hero.title2': 'The Most Powerful Code Editor',
+          'hero.description': 'Visual Studio Code is a free, open-source code editor by Microsoft, combining the simplicity of a text editor with the power of an integrated development environment.',
+          'hero.stat1': 'Monthly Users', 'hero.stat2': 'Extensions', 'hero.stat3': 'User Rating',
+          'hero.ctaDownload': 'Download Now Free', 'hero.ctaExplore': 'Explore Features',
+          'interface.title': 'Understanding the VS Code Interface',
+          'interface.subtitle': 'The interface is divided into five main areas, each designed to give you a smooth development experience.',
+          'interface.item1.title': 'Activity Bar', 'interface.item1.desc': 'On the far left, providing quick access to Explorer, Search, Git, and Debug.',
+          'interface.item2.title': 'Sidebar', 'interface.item2.desc': 'Displays folder contents, search results, Git details, and breakpoints.',
+          'interface.item3.title': 'Editor Area', 'interface.item3.desc': 'The beating heart, where you write code with syntax highlighting and autocomplete.',
+          'interface.item4.title': 'Panel', 'interface.item4.desc': 'Contains the integrated terminal, problems, and output.',
+          'interface.item5.title': 'Status Bar', 'interface.item5.desc': 'Shows current branch, file encoding, language, and Git status.',
+          'features.title': 'Key Features', 'features.subtitle': 'Everything you need for faster, smarter development, built right into the editor.',
+          'features.f1.title': 'IntelliSense', 'features.f1.desc': 'Smart autocomplete and inline documentation for functions and libraries.',
+          'features.f2.title': 'Built-in Git', 'features.f2.desc': 'Full version control without leaving the editor.',
+          'features.f3.title': 'Debugging', 'features.f3.desc': 'Breakpoints and step-by-step variable tracking.',
+          'features.f4.title': 'Emmet', 'features.f4.desc': 'Write HTML and CSS at lightning speed.',
+          'features.f5.title': 'Unlimited Extensions', 'features.f5.desc': 'Thousands of add-ons to customize your editor.',
+          'features.f6.title': 'Integrated Terminal', 'features.f6.desc': 'Run commands without leaving the editor.',
+          'extensions.title': 'Top Extensions', 'extensions.subtitle': 'Essential extensions to speed up your workflow and improve code quality.',
+          'extensions.e1.desc': 'Automatic code formatting with unified standards.', 'extensions.e1.badge': 'Most Downloaded',
+          'extensions.e2.desc': 'Local server with instant browser reload.', 'extensions.e2.badge': 'Web Development',
+          'extensions.e3.desc': 'Detect code errors and unify style.', 'extensions.e3.badge': 'Code Quality',
+          'extensions.e4.desc': 'AI-powered coding assistant.', 'extensions.e4.badge': 'AI',
+          'extensions.e5.desc': 'Autocomplete for file paths.', 'extensions.e5.badge': 'Productivity',
+          'extensions.e6.desc': 'Professional color themes for the editor.', 'extensions.e6.badge': 'Customization',
+          'shortcuts.title': 'Keyboard Shortcuts', 'shortcuts.subtitle': 'The most important shortcuts for Windows/Linux and macOS to speed up your work.',
+          'shortcuts.s1': 'Command Palette', 'shortcuts.s2': 'Search Files',
+          'shortcuts.s3': 'Find and Replace', 'shortcuts.s4': 'Open Terminal',
+          'shortcuts.s5': 'Toggle Comment', 'shortcuts.s6': 'Copy Current Line',
+          'shortcuts.s7': 'Move Line Up/Down',
+          'engineer.credit': 'Prepared by Engineer Amer Al-Dairi',
+          'footer.brandDesc': 'The world\'s most popular open-source code editor. Completely free and works on all platforms.',
+          'footer.resources': 'Official Resources', 'footer.docs': 'Official Documentation',
+          'footer.updates': 'Latest Updates', 'footer.api': 'Extension API',
+          'footer.downloadPage': 'Download Page', 'footer.community': 'Community',
+          'footer.quickLinks': 'Quick Links',
+          'footer.copyright': '© 2026 VS Code Comprehensive Guide — All rights reserved.',
+          'footer.trademark': 'VS Code is a trademark of Microsoft',
+          'footer.downloadNow': 'Download now from the official website',
+          'lang.choose': 'Choose Language'
+        },
+        fr: {
+          'html.lang': 'fr', 'html.dir': 'ltr', 'langName': 'Français',
+          'nav.interface': 'Interface', 'nav.features': 'Fonctionnalités',
+          'nav.extensions': 'Extensions', 'nav.shortcuts': 'Raccourcis', 'nav.download': 'Télécharger',
+          'hero.badge': 'Version 1.95 disponible',
+          'hero.title1': 'Maîtrisez', 'hero.title2': 'L\'éditeur de code le plus puissant',
+          'hero.description': 'Visual Studio Code est un éditeur de code gratuit et open-source de Microsoft, combinant la simplicité d\'un éditeur de texte avec la puissance d\'un environnement de développement intégré.',
+          'hero.stat1': 'Utilisateurs mensuels', 'hero.stat2': 'Extensions', 'hero.stat3': 'Note des utilisateurs',
+          'hero.ctaDownload': 'Télécharger gratuitement', 'hero.ctaExplore': 'Explorer les fonctionnalités',
+          'interface.title': 'Comprendre l\'interface de VS Code',
+          'interface.subtitle': 'L\'interface est divisée en cinq zones principales, chacune conçue pour offrir une expérience de développement fluide.',
+          'interface.item1.title': 'Barre d\'activité', 'interface.item1.desc': 'À l\'extrême gauche, accès rapide à l\'Explorateur, la Recherche, Git et le Débogage.',
+          'interface.item2.title': 'Barre latérale', 'interface.item2.desc': 'Affiche le contenu des dossiers, les résultats de recherche, les détails Git et les points d\'arrêt.',
+          'interface.item3.title': 'Zone d\'édition', 'interface.item3.desc': 'Le cœur battant, où vous écrivez du code avec coloration syntaxique et autocomplétion.',
+          'interface.item4.title': 'Panneau', 'interface.item4.desc': 'Contient le terminal intégré, les problèmes et la sortie.',
+          'interface.item5.title': 'Barre d\'état', 'interface.item5.desc': 'Affiche la branche actuelle, l\'encodage, le langage et l\'état Git.',
+          'features.title': 'Fonctionnalités principales', 'features.subtitle': 'Tout ce dont vous avez besoin pour un développement plus rapide et plus intelligent, intégré directement dans l\'éditeur.',
+          'features.f1.title': 'IntelliSense', 'features.f1.desc': 'Autocomplétion intelligente et documentation en ligne.',
+          'features.f2.title': 'Git intégré', 'features.f2.desc': 'Contrôle de version complet sans quitter l\'éditeur.',
+          'features.f3.title': 'Débogage', 'features.f3.desc': 'Points d\'arrêt et suivi pas à pas des variables.',
+          'features.f4.title': 'Emmet', 'features.f4.desc': 'Écrivez HTML et CSS à la vitesse de l\'éclair.',
+          'features.f5.title': 'Extensions illimitées', 'features.f5.desc': 'Des milliers d\'extensions pour personnaliser l\'éditeur.',
+          'features.f6.title': 'Terminal intégré', 'features.f6.desc': 'Exécutez des commandes sans quitter l\'éditeur.',
+          'extensions.title': 'Meilleures extensions', 'extensions.subtitle': 'Extensions indispensables pour accélérer votre flux de travail et améliorer la qualité du code.',
+          'extensions.e1.desc': 'Formatage automatique du code selon des normes unifiées.', 'extensions.e1.badge': 'Le plus téléchargé',
+          'extensions.e2.desc': 'Serveur local avec rechargement instantané.', 'extensions.e2.badge': 'Développement Web',
+          'extensions.e3.desc': 'Détecter les erreurs et unifier le style.', 'extensions.e3.badge': 'Qualité du code',
+          'extensions.e4.desc': 'Assistant de codage par IA.', 'extensions.e4.badge': 'IA',
+          'extensions.e5.desc': 'Autocomplétion des chemins de fichiers.', 'extensions.e5.badge': 'Productivité',
+          'extensions.e6.desc': 'Thèmes de couleurs professionnels.', 'extensions.e6.badge': 'Personnalisation',
+          'shortcuts.title': 'Raccourcis clavier', 'shortcuts.subtitle': 'Les raccourcis les plus importants pour Windows/Linux et macOS.',
+          'shortcuts.s1': 'Palette de commandes', 'shortcuts.s2': 'Rechercher des fichiers',
+          'shortcuts.s3': 'Rechercher et remplacer', 'shortcuts.s4': 'Ouvrir le terminal',
+          'shortcuts.s5': 'Commenter / Décommenter', 'shortcuts.s6': 'Copier la ligne actuelle',
+          'shortcuts.s7': 'Déplacer la ligne',
+          'engineer.credit': 'Préparé par l\'ingénieur Amer Al-Dairi',
+          'footer.brandDesc': 'L\'éditeur de code open-source le plus populaire au monde. Entièrement gratuit et fonctionne sur toutes les plateformes.',
+          'footer.resources': 'Ressources officielles', 'footer.docs': 'Documentation officielle',
+          'footer.updates': 'Dernières mises à jour', 'footer.api': 'API des extensions',
+          'footer.downloadPage': 'Page de téléchargement', 'footer.community': 'Communauté',
+          'footer.quickLinks': 'Liens rapides',
+          'footer.copyright': '© 2026 Guide complet VS Code — Tous droits réservés.',
+          'footer.trademark': 'VS Code est une marque de Microsoft',
+          'footer.downloadNow': 'Téléchargez depuis le site officiel',
+          'lang.choose': 'Choisir la langue'
+        },
+        tr: {
+          'html.lang': 'tr', 'html.dir': 'ltr', 'langName': 'Türkçe',
+          'nav.interface': 'Arayüz', 'nav.features': 'Özellikler',
+          'nav.extensions': 'Uzantılar', 'nav.shortcuts': 'Kısayollar', 'nav.download': 'İndir',
+          'hero.badge': 'Sürüm 1.95 şimdi mevcut',
+          'hero.title1': 'Ustalaş', 'hero.title2': 'En Güçlü Kod Editörü',
+          'hero.description': 'Visual Studio Code, Microsoft tarafından geliştirilen ücretsiz ve açık kaynaklı bir kod editörüdür. Basit bir metin editörünün sadeliğini entegre bir geliştirme ortamının gücüyle birleştirir.',
+          'hero.stat1': 'Aylık Kullanıcı', 'hero.stat2': 'Uzantı', 'hero.stat3': 'Kullanıcı Puanı',
+          'hero.ctaDownload': 'Ücretsiz İndir', 'hero.ctaExplore': 'Özellikleri Keşfet',
+          'interface.title': 'VS Code Arayüzünü Anlamak',
+          'interface.subtitle': 'Arayüz, her biri size sorunsuz bir geliştirme deneyimi sunmak için tasarlanmış beş ana bölüme ayrılmıştır.',
+          'interface.item1.title': 'Etkinlik Çubuğu', 'interface.item1.desc': 'En solda, Explorer, Arama, Git ve Hata Ayıklama\'ya hızlı erişim sağlar.',
+          'interface.item2.title': 'Kenar Çubuğu', 'interface.item2.desc': 'Klasör içeriğini, arama sonuçlarını, Git ayrıntılarını ve kesme noktalarını gösterir.',
+          'interface.item3.title': 'Düzenleyici Alanı', 'interface.item3.desc': 'Atan kalp, sözdizimi vurgulama ve otomatik tamamlama ile kod yazdığınız yer.',
+          'interface.item4.title': 'Panel', 'interface.item4.desc': 'Entegre terminal, sorunlar ve çıktıyı içerir.',
+          'interface.item5.title': 'Durum Çubuğu', 'interface.item5.desc': 'Geçerli dalı, dosya kodlamasını, dili ve Git durumunu gösterir.',
+          'features.title': 'Temel Özellikler', 'features.subtitle': 'Daha hızlı ve daha akıllı geliştirme için ihtiyacınız olan her şey, doğrudan düzenleyiciye entegre edilmiştir.',
+          'features.f1.title': 'IntelliSense', 'features.f1.desc': 'Akıllı otomatik tamamlama ve satır içi belgeler.',
+          'features.f2.title': 'Yerleşik Git', 'features.f2.desc': 'Düzenleyiciden ayrılmadan tam sürüm kontrolü.',
+          'features.f3.title': 'Hata Ayıklama', 'features.f3.desc': 'Kesme noktaları ve adım adım değişken takibi.',
+          'features.f4.title': 'Emmet', 'features.f4.desc': 'HTML ve CSS\'i ışık hızında yazın.',
+          'features.f5.title': 'Sınırsız Uzantı', 'features.f5.desc': 'Düzenleyiciyi özelleştirmek için binlerce eklenti.',
+          'features.f6.title': 'Entegre Terminal', 'features.f6.desc': 'Düzenleyiciden ayrılmadan komutları çalıştırın.',
+          'extensions.title': 'En İyi Uzantılar', 'extensions.subtitle': 'İş akışınızı hızlandırmak ve kod kalitesini artırmak için vazgeçilmez uzantılar.',
+          'extensions.e1.desc': 'Birleşik standartlarla otomatik kod biçimlendirme.', 'extensions.e1.badge': 'En Çok İndirilen',
+          'extensions.e2.desc': 'Anında tarayıcı yenilemeli yerel sunucu.', 'extensions.e2.badge': 'Web Geliştirme',
+          'extensions.e3.desc': 'Kod hatalarını algıla ve stili birleştir.', 'extensions.e3.badge': 'Kod Kalitesi',
+          'extensions.e4.desc': 'Yapay zeka destekli kod asistanı.', 'extensions.e4.badge': 'Yapay Zeka',
+          'extensions.e5.desc': 'Dosya yolları için otomatik tamamlama.', 'extensions.e5.badge': 'Verimlilik',
+          'extensions.e6.desc': 'Editör için profesyonel renk temaları.', 'extensions.e6.badge': 'Özelleştirme',
+          'shortcuts.title': 'Klavye Kısayolları', 'shortcuts.subtitle': 'Windows/Linux ve macOS için işinizi hızlandıracak en önemli kısayollar.',
+          'shortcuts.s1': 'Komut Paleti', 'shortcuts.s2': 'Dosyalarda Ara',
+          'shortcuts.s3': 'Bul ve Değiştir', 'shortcuts.s4': 'Terminali Aç',
+          'shortcuts.s5': 'Yorumu Aç/Kapat', 'shortcuts.s6': 'Geçerli Satırı Kopyala',
+          'shortcuts.s7': 'Satırı Yukarı/Aşağı Taşı',
+          'engineer.credit': 'Mühendis Amer Al-Dairi tarafından hazırlandı',
+          'footer.brandDesc': 'Dünyanın en popüler açık kaynaklı kod editörü. Tamamen ücretsiz ve tüm platformlarda çalışır.',
+          'footer.resources': 'Resmi Kaynaklar', 'footer.docs': 'Resmi Dokümantasyon',
+          'footer.updates': 'Son Güncellemeler', 'footer.api': 'Uzantı API\'si',
+          'footer.downloadPage': 'İndirme Sayfası', 'footer.community': 'Topluluk',
+          'footer.quickLinks': 'Hızlı Bağlantılar',
+          'footer.copyright': '© 2026 Kapsamlı VS Code Rehberi — Tüm hakları saklıdır.',
+          'footer.trademark': 'VS Code, Microsoft\'un ticari markasıdır',
+          'footer.downloadNow': 'Resmi web sitesinden şimdi indirin',
+          'lang.choose': 'Dil Seç'
+        },
+        es: {
+          'html.lang': 'es', 'html.dir': 'ltr', 'langName': 'Español',
+          'nav.interface': 'Interfaz', 'nav.features': 'Características',
+          'nav.extensions': 'Extensiones', 'nav.shortcuts': 'Atajos', 'nav.download': 'Descargar',
+          'hero.badge': 'Versión 1.95 disponible',
+          'hero.title1': 'Domina', 'hero.title2': 'El Editor de Código Más Potente',
+          'hero.description': 'Visual Studio Code es un editor de código gratuito y de código abierto de Microsoft, que combina la simplicidad de un editor de texto con el poder de un entorno de desarrollo integrado.',
+          'hero.stat1': 'Usuarios Mensuales', 'hero.stat2': 'Extensiones', 'hero.stat3': 'Valoración',
+          'hero.ctaDownload': 'Descargar Gratis', 'hero.ctaExplore': 'Explorar Funciones',
+          'interface.title': 'Entendiendo la Interfaz de VS Code',
+          'interface.subtitle': 'La interfaz se divide en cinco áreas principales, cada una diseñada para ofrecerte una experiencia de desarrollo fluida.',
+          'interface.item1.title': 'Barra de Actividad', 'interface.item1.desc': 'En el extremo izquierdo, acceso rápido al Explorador, Búsqueda, Git y Depuración.',
+          'interface.item2.title': 'Barra Lateral', 'interface.item2.desc': 'Muestra el contenido de carpetas, resultados de búsqueda, detalles de Git y puntos de interrupción.',
+          'interface.item3.title': 'Área del Editor', 'interface.item3.desc': 'El corazón, donde escribes código con resaltado de sintaxis y autocompletado.',
+          'interface.item4.title': 'Panel', 'interface.item4.desc': 'Contiene la terminal integrada, problemas y salida.',
+          'interface.item5.title': 'Barra de Estado', 'interface.item5.desc': 'Muestra la rama actual, codificación de archivo, lenguaje y estado de Git.',
+          'features.title': 'Características Principales', 'features.subtitle': 'Todo lo que necesitas para un desarrollo más rápido e inteligente, integrado directamente en el editor.',
+          'features.f1.title': 'IntelliSense', 'features.f1.desc': 'Autocompletado inteligente y documentación en línea.',
+          'features.f2.title': 'Git Integrado', 'features.f2.desc': 'Control de versiones completo sin salir del editor.',
+          'features.f3.title': 'Depuración', 'features.f3.desc': 'Puntos de interrupción y seguimiento paso a paso de variables.',
+          'features.f4.title': 'Emmet', 'features.f4.desc': 'Escribe HTML y CSS a la velocidad del rayo.',
+          'features.f5.title': 'Extensiones Ilimitadas', 'features.f5.desc': 'Miles de complementos para personalizar el editor.',
+          'features.f6.title': 'Terminal Integrada', 'features.f6.desc': 'Ejecuta comandos sin salir del editor.',
+          'extensions.title': 'Mejores Extensiones', 'extensions.subtitle': 'Extensiones esenciales para acelerar tu flujo de trabajo y mejorar la calidad del código.',
+          'extensions.e1.desc': 'Formateo automático de código con estándares unificados.', 'extensions.e1.badge': 'Más Descargada',
+          'extensions.e2.desc': 'Servidor local con recarga instantánea.', 'extensions.e2.badge': 'Desarrollo Web',
+          'extensions.e3.desc': 'Detectar errores y unificar estilo.', 'extensions.e3.badge': 'Calidad del Código',
+          'extensions.e4.desc': 'Asistente de codificación con IA.', 'extensions.e4.badge': 'IA',
+          'extensions.e5.desc': 'Autocompletado de rutas de archivos.', 'extensions.e5.badge': 'Productividad',
+          'extensions.e6.desc': 'Temas de colores profesionales.', 'extensions.e6.badge': 'Personalización',
+          'shortcuts.title': 'Atajos de Teclado', 'shortcuts.subtitle': 'Los atajos más importantes para Windows/Linux y macOS para acelerar tu trabajo.',
+          'shortcuts.s1': 'Paleta de Comandos', 'shortcuts.s2': 'Buscar Archivos',
+          'shortcuts.s3': 'Buscar y Reemplazar', 'shortcuts.s4': 'Abrir Terminal',
+          'shortcuts.s5': 'Comentar / Descomentar', 'shortcuts.s6': 'Copiar Línea Actual',
+          'shortcuts.s7': 'Mover Línea Arriba/Abajo',
+          'engineer.credit': 'Preparado por el Ingeniero Amer Al-Dairi',
+          'footer.brandDesc': 'El editor de código de código abierto más popular del mundo. Completamente gratis y funciona en todas las plataformas.',
+          'footer.resources': 'Recursos Oficiales', 'footer.docs': 'Documentación Oficial',
+          'footer.updates': 'Últimas Actualizaciones', 'footer.api': 'API de Extensiones',
+          'footer.downloadPage': 'Página de Descarga', 'footer.community': 'Comunidad',
+          'footer.quickLinks': 'Enlaces Rápidos',
+          'footer.copyright': '© 2026 Guía Completa de VS Code — Todos los derechos reservados.',
+          'footer.trademark': 'VS Code es una marca registrada de Microsoft',
+          'footer.downloadNow': 'Descarga ahora desde el sitio oficial',
+          'lang.choose': 'Elegir idioma'
+        }
+      };
+
+      const htmlElement = document.documentElement;
+      const currentLangName = document.getElementById('currentLangName');
+      const langDesktop = document.getElementById('langDesktop');
+      const langBtn = document.getElementById('langBtn');
+
+      function setLanguage(langCode) {
+        const t = translations[langCode];
+        if (!t) return;
+
+        htmlElement.setAttribute('lang', t['html.lang']);
+        htmlElement.setAttribute('dir', t['html.dir']);
+        if (currentLangName) currentLangName.textContent = t['langName'];
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (t[key] !== undefined) {
+            el.textContent = t[key];
+          }
+        });
+
+        // تحديث جميع أزرار اللغة (سطح المكتب + الموبايل)
+        document.querySelectorAll('.lang-option, .lang-mobile-option').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.lang === langCode);
+        });
+
+        try { localStorage.setItem('vscode-lang', langCode); } catch (e) {}
+      }
+
+      // زر اللغة على الديسكتوب
+      if (langBtn) {
+        langBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          langDesktop.classList.toggle('open');
+        });
+      }
+
+      // إغلاق قائمة الديسكتوب عند النقر خارجها
+      document.addEventListener('click', (e) => {
+        if (langDesktop && !langDesktop.contains(e.target)) {
+          langDesktop.classList.remove('open');
+        }
+      });
+
+      // خيارات اللغة على الديسكتوب
+      document.querySelectorAll('.lang-option').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setLanguage(btn.dataset.lang);
+          if (langDesktop) langDesktop.classList.remove('open');
+        });
+      });
+
+      // ✅ خيارات اللغة داخل القائمة الجانبية على الموبايل
+      document.querySelectorAll('.lang-mobile-option').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setLanguage(btn.dataset.lang);
+          // إغلاق القائمة الجانبية بعد اختيار اللغة
+          const navLinks = document.getElementById('navLinks');
+          const menuBtn = document.getElementById('menuBtn');
+          if (navLinks) navLinks.classList.remove('active');
+          if (menuBtn) {
+            const icon = menuBtn.querySelector('i');
+            if (icon) icon.className = 'fas fa-bars';
+          }
+        });
+      });
+
+      // تحميل اللغة المحفوظة
+      let savedLang = 'ar';
+      try { savedLang = localStorage.getItem('vscode-lang') || 'ar'; } catch (e) {}
+      setLanguage(savedLang);
+
+      // قائمة الهامبرغر على الموبايل
+      const menuBtn = document.getElementById('menuBtn');
+      const navLinks = document.getElementById('navLinks');
+
+      if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', function() {
+          const isActive = navLinks.classList.toggle('active');
+          const icon = menuBtn.querySelector('i');
+          icon.className = isActive ? 'fas fa-times' : 'fas fa-bars';
+        });
+
+        // إغلاق القائمة عند النقر على أي رابط (ما عدا خيارات اللغة)
+        navLinks.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            menuBtn.querySelector('i').className = 'fas fa-bars';
+          });
+        });
+      }
+
+      // تأثيرات fade-in
+      const fadeElements = document.querySelectorAll('.fade-in');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+      fadeElements.forEach(el => observer.observe(el));
+
+      // زر العودة للأعلى
+      const backToTop = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      }, { passive: true });
+
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // ظل النافبار عند التمرير
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.4)';
+        } else {
+          navbar.style.boxShadow = 'none';
+        }
+      }, { passive: true });
+
+      window.addEventListener('load', () => {
+        fadeElements.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.9) {
+            el.classList.add('visible');
+          }
+        });
+      });
+
+    })();
+  </script>
+
+</body>
+</html>
