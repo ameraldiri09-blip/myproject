@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>لوحة الإدارة - سوق الشيخ مسكين</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f4ec;--card:#fff;--ink:#1f2a26;--mut:#667069;--pri:#1f5a4a;--pri2:#14403a;--soft:#e4efe9;--acc:#b88a3b;--line:#e5e0d3;--hd:#14403a;--red:#a8432f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',system-ui,sans-serif;line-height:1.6}
+button,input,select{font-family:inherit;font-size:1rem}
+.wrap{max-width:900px;margin:auto;padding:0 16px 40px}
+header{background:linear-gradient(135deg,var(--pri2),var(--pri));color:#fff;padding:18px 0;margin-bottom:18px}
+header .wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-bottom:0}
+header h1{margin:0;font-size:1.25rem;flex:1}
+.btn{border:1px solid var(--pri);border-radius:12px;padding:8px 16px;background:var(--pri);color:#fff;font-weight:600;cursor:pointer}
+header .btn{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4)}header .btn.g{background:var(--acc);border-color:var(--acc)}
+.btn.e{background:transparent;color:var(--pri);padding:4px 12px}.btn.d{background:transparent;color:var(--red);border-color:var(--red);padding:4px 12px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+.panel h2{margin:0 0 8px;font-size:1.1rem;color:var(--hd)}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin:10px 0}
+.f input:not([type=checkbox]),.f select{width:100%;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.f label{font-size:.85rem;color:var(--mut);display:block}.ck{display:flex;align-items:center;gap:8px}.ck label{font-size:1rem;color:var(--ink)}
+.row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}.row .sp{flex:1}
+.row img,.row .th{width:46px;height:46px;border-radius:10px;object-fit:cover;background:var(--soft)}
+.note{background:var(--soft);border-radius:12px;padding:10px 14px;font-size:.9rem;color:var(--hd);margin-bottom:16px}
+.prev{width:60px;height:60px;border-radius:10px;object-fit:cover;margin-top:6px;display:none}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:3px}.tag{font-size:.8rem;background:var(--soft);color:var(--hd);padding:0 10px;border-radius:99px}.tag.st{color:var(--acc);background:#f6efdc}.tag.r{background:#f7e4e0}
+.row .sp{min-width:0}small{color:var(--mut)}footer{text-align:center;color:var(--mut);padding:10px 0 30px;font-size:.9rem}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1 id="h1"></h1>
+<button class="btn" id="lb" onclick="tg()"></button>
+<button class="btn" id="bi" onclick="imp.click()"></button>
+<button class="btn g" id="be" onclick="exp()"></button>
+<input type="file" id="imp" accept=".json" hidden onchange="doImp(this.files[0])">
+</div></header>
+<main class="wrap">
+<div class="note" id="note"></div>
+<div class="panel"><h2 id="h-as"></h2><div class="f" id="sf"></div>
+<div class="f"><div><label data-l="logo"></label><input type="file" accept="image/*" id="s_logo" onchange="pv(this,'slp')"><img class="prev" id="slp"></div></div>
+<button class="btn" id="sbtn" onclick="saveS()"></button> <button class="btn d" id="scx" style="display:none" onclick="resetS()"></button></div>
+<div class="panel"><h2 id="h-ap"></h2><div class="f" id="pf"></div>
+<div class="f"><div><label data-l="img"></label><input type="file" accept="image/*" id="p_img" onchange="pv(this,'pip')"><img class="prev" id="pip"></div></div>
+<button class="btn" id="pbtn" onclick="saveP()"></button> <button class="btn d" id="pcx" style="display:none" onclick="resetP()"></button></div>
+<div class="panel"><h2 id="h-ls"></h2><div id="ls"></div></div>
+<div class="panel"><h2 id="h-lp"></h2><div id="lp"></div></div>
+<div class="panel"><h2 id="h-cfg"></h2><div class="f"><div><label data-l="cur"></label><input id="c_cur" onchange="cfg()"></div><div><label data-l="gid"></label><input id="c_gid" dir="ltr" onchange="cfg()"></div></div><small id="gidn"></small></div>
+</main>
+<footer id="ft"></footer>
+<script>
+let D={cur:'',shops:[],prods:[]},ES=null,EP=null;
+let L=(()=>{try{return localStorage.getItem('l')||'ar'}catch(e){return'ar'}})();
+const T={ar:{title:"لوحة الإدارة - سوق الشيخ مسكين",h1:"🌿 لوحة إدارة سوق الشيخ مسكين",imp:"استيراد data.json",exp:"تصدير data.json",note:"بعد أي تعديل اضغط <b>«تصدير data.json»</b> وارفع الملف على GitHub بجانب store.html (استبدل القديم). التعديلات تُحفظ تلقائيًا في هذا المتصفح.",as:"إضافة / تعديل محل",ap:"إضافة / تعديل منتج",shops:"المحلات",prods:"المنتجات",cfg:"إعدادات الموقع",stats:"الإحصائيات",lang:"English",logo:"شعار المحل",img:"صورة المنتج",savs:"حفظ المحل",savp:"حفظ المنتج",saveedit:"حفظ التعديلات",cx:"إلغاء التعديل",pick:"اختر المحل",edit:"تعديل",del:"حذف",nos:"لا توجد محلات بعد",nop:"لا توجد منتجات بعد",needS:"اكتب اسم المحل",needP:"اكتب اسم المنتج واختر المحل",sure:"هل أنت متأكد من الحذف؟",bad:"ملف غير صالح",by:"إعداد المهندس: عامر الديري",nocloud:"فعّل قاعدة البيانات من الإعدادات أعلاه لعرض الإحصائيات.",visits:"الزيارات",revs:"التقييمات",refresh:"تحديث الإحصائيات",cur:"العملة (مثال: ل.س أو $)",url:"رابط Supabase (اختياري)",key:"مفتاح anon (اختياري)",cfgn:"الرابط والمفتاح لتفعيل تقييمات الزبائن والإحصائيات (انظر ملف supabase.sql).",gid:"Google Client ID (تسجيل دخول الزبائن)",gidn:"اتركه فارغًا لإيقاف تسجيل الدخول. أضف رابط الموقع (GitHub والدومين) في Authorized JavaScript origins من Google Cloud.",f_n:"الاسم بالعربية",f_e:"الاسم بالإنجليزية",f_cat:"التصنيف (مثال: بقالة)",f_phone:"رقم واتساب (9639xxxxxxxx)",f_from:"وقت الفتح",f_to:"وقت الإغلاق",f_h24:"مفتوح 24 ساعة (بدون إغلاق)",f_map:"رابط الموقع على خرائط جوجل",f_desc:"وصف (اختياري)",f_rate:"التقييم (من الأدمن)",f_deliv:"يوجد توصيل",f_shop:"المحل",f_price:"السعر (رقم)",f_old:"السعر قبل الخصم (اختياري)",f_badge:"شارة",f_out:"غير متوفر",f_b_new:"جديد",f_b_hot:"مميز"},
+en:{title:"Admin - Sheikh Maskin Market",h1:"🌿 Sheikh Maskin Market Admin",imp:"Import data.json",exp:"Export data.json",note:"After any change click <b>“Export data.json”</b> and upload it to GitHub next to store.html (replace the old one). Changes are saved automatically in this browser.",as:"Add / edit shop",ap:"Add / edit product",shops:"Shops",prods:"Products",cfg:"Site settings",stats:"Statistics",lang:"العربية",logo:"Shop logo",img:"Product image",savs:"Save shop",savp:"Save product",saveedit:"Save changes",cx:"Cancel edit",pick:"Choose shop",edit:"Edit",del:"Delete",nos:"No shops yet",nop:"No products yet",needS:"Enter the shop name",needP:"Enter the product name and choose a shop",sure:"Are you sure you want to delete?",bad:"Invalid file",by:"Prepared by Eng. Amer Aldiri",nocloud:"Enable the database in the settings above to see statistics.",visits:"Visits",revs:"Reviews",refresh:"Refresh statistics",cur:"Currency (e.g. SYP or $)",url:"Supabase URL (optional)",key:"anon key (optional)",cfgn:"URL and key enable customer reviews and statistics (see supabase.sql).",gid:"Google Client ID (customer sign-in)",gidn:"Leave empty to turn sign-in off. Add your site URLs (GitHub and domain) under Authorized JavaScript origins in Google Cloud.",f_n:"Arabic name",f_e:"English name",f_cat:"Category (e.g. Grocery)",f_phone:"WhatsApp number (9639xxxxxxxx)",f_from:"Opening time",f_to:"Closing time",f_h24:"Open 24 hours (no closing time)",f_map:"Google Maps link",f_desc:"Description (optional)",f_rate:"Rating (by admin)",f_deliv:"Delivery available",f_shop:"Shop",f_price:"Price (number)",f_old:"Price before discount (optional)",f_badge:"Badge",f_out:"Out of stock",f_b_new:"New",f_b_hot:"Featured"}};
+const t=k=>T[L][k],$=id=>document.getElementById(id);
+const SF=[['n','t'],['e','t'],['cat','t'],['phone','t'],['from','time'],['to','time'],['h24','c'],['map','t'],['desc','t'],['rate','r'],['deliv','c']];
+const PF=[['shop','s'],['n','t'],['e','t'],['price','num'],['old','num'],['desc','t'],['badge','b'],['rate','r'],['out','c']];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nm=o=>L==='ar'?(o.n||o.e||''):(o.e||o.n||''),uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const num=v=>{if(v==null||v==='')return null;const n=typeof v==='number'?v:parseFloat(String(v).replace(/,/g,'').replace(/[^\d.]/g,''));return isNaN(n)?null:n};
+const fld=(pre,[k,ty])=>{const id=pre+'_'+k,l=`<label data-l="${k}"></label>`;
+if(ty==='c')return `<div class="ck"><input type="checkbox" id="${id}"><label for="${id}" data-l="${k}"></label></div>`;
+if(ty==='s')return `<div>${l}<select id="${id}"></select></div>`;
+if(ty==='b')return `<div>${l}<select id="${id}"><option value=""> — </option><option value="new" data-l="b_new"></option><option value="hot" data-l="b_hot"></option></select></div>`;
+if(ty==='r')return `<div>${l}<select id="${id}">${[0,1,2,3,4,5].map(n=>`<option value="${n}">${n?'★'.repeat(n):'—'}</option>`).join('')}</select></div>`;
+return `<div>${l}<input id="${id}" type="${ty==='num'?'number':ty==='time'?'time':'text'}" ${ty==='num'?'min="0" step="any"':''}></div>`};
+$('sf').innerHTML=SF.map(f=>fld('s',f)).join('');$('pf').innerHTML=PF.map(f=>fld('p',f)).join('');
+function h24ui(){const c=$('s_h24').checked;$('s_from').disabled=$('s_to').disabled=c}
+$('s_h24').onchange=h24ui;
+const rd=(pre,F)=>{const o={};for(const[k,ty]of F){const e=$(pre+'_'+k);o[k]=ty==='c'?e.checked:ty==='num'?num(e.value):ty==='r'?+e.value:e.value.trim()}return o};
+const wr=(pre,F,o)=>{for(const[k,ty]of F){const e=$(pre+'_'+k),v=o[k];if(ty==='c')e.checked=!!v;else e.value=v==null?(ty==='r'?0:''):v}};
+function idb(){return new Promise((r,j)=>{const o=indexedDB.open('sm',1);o.onupgradeneeded=()=>o.result.createObjectStore('kv');o.onsuccess=()=>r(o.result);o.onerror=j})}
+async function load(){const d=await idb();return new Promise(r=>{const g=d.transaction('kv').objectStore('kv').get('data');g.onsuccess=()=>r(g.result||null);g.onerror=()=>r(null)})}
+async function save(){const d=await idb();await new Promise(r=>{const x=d.transaction('kv','readwrite');x.objectStore('kv').put(D,'data');x.oncomplete=r});draw()}
+async function shrink(f,m){if(!f)return null;const b=await createImageBitmap(f),k=Math.min(1,m/Math.max(b.width,b.height)),c=document.createElement('canvas');c.width=Math.round(b.width*k);c.height=Math.round(b.height*k);c.getContext('2d').drawImage(b,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.72)}
+async function pv(inp,id){const im=$(id);if(!inp.files[0]){im.style.display='none';return}im.src=await shrink(inp.files[0],200);im.style.display='block'}
+async function saveS(){const v=rd('s',SF);if(!v.n&&!v.e)return alert(t('needS'));const lg=await shrink($('s_logo').files[0],240),o=ES&&D.shops.find(x=>x.id===ES);
+if(o)Object.assign(o,v,{logo:lg||o.logo});else D.shops.push({id:uid(),...v,logo:lg,ts:Date.now()});resetS();await save()}
+function resetS(){ES=null;wr('s',SF,{});h24ui();$('s_logo').value='';$('slp').style.display='none';$('scx').style.display='none';lab()}
+function editS(id){const o=D.shops.find(x=>x.id===id);if(!o)return;ES=id;wr('s',SF,o);h24ui();$('s_logo').value='';if(o.logo){$('slp').src=o.logo;$('slp').style.display='block'}else $('slp').style.display='none';$('scx').style.display='';lab();$('s_n').scrollIntoView({behavior:'smooth',block:'center'})}
+async function saveP(){const v=rd('p',PF);if((!v.n&&!v.e)||!v.shop)return alert(t('needP'));const im=await shrink($('p_img').files[0],640),o=EP&&D.prods.find(x=>x.id===EP);
+if(o)Object.assign(o,v,{img:im||o.img});else D.prods.unshift({id:uid(),...v,img:im,ts:Date.now()});resetP();await save()}
+function resetP(){EP=null;const s=$('p_shop').value;wr('p',PF,{shop:s});$('p_img').value='';$('pip').style.display='none';$('pcx').style.display='none';lab()}
+function editP(id){const o=D.prods.find(x=>x.id===id);if(!o)return;EP=id;wr('p',PF,o);$('p_img').value='';if(o.img){$('pip').src=o.img;$('pip').style.display='block'}else $('pip').style.display='none';$('pcx').style.display='';lab();$('p_n').scrollIntoView({behavior:'smooth',block:'center'})}
+async function del(k,id){if(!confirm(t('sure')))return;if(k==='shops')D.prods=D.prods.filter(p=>p.shop!==id);D[k]=D[k].filter(x=>x.id!==id);if(ES===id)resetS();if(EP===id)resetP();await save()}
+const lab=()=>{$('sbtn').textContent=ES?t('saveedit'):t('savs');$('pbtn').textContent=EP?t('saveedit'):t('savp')};
+function cfg(){D.cur=$('c_cur').value.trim();D.gid=$('c_gid').value.trim();save()}
+function fillCfg(){$('c_cur').value=D.cur||'';$('c_gid').value=D.gid||''}
+function draw(){const cur=$('p_shop').value;
+$('p_shop').innerHTML=`<option value="">${t('pick')}</option>`+D.shops.map(s=>`<option value="${s.id}">${esc(nm(s))}</option>`).join('');$('p_shop').value=cur;
+const th=u=>u?`<img src="${u}">`:'<div class="th"></div>';
+$('ls').innerHTML=D.shops.map(s=>`<div class="row">${th(s.logo)}<span class="sp"><b>${esc(nm(s))}</b><div class="meta">${s.cat?`<span class="tag">${esc(s.cat)}</span>`:''}${s.h24?'<span class="tag">🕒 24h</span>':s.from&&s.to?`<span class="tag">🕒 ${s.from} - ${s.to}</span>`:''}${s.rate?`<span class="tag st">${'★'.repeat(s.rate)}</span>`:''}${s.deliv?'<span class="tag">🛵</span>':''}</div></span><button class="btn e" onclick="editS('${s.id}')">${t('edit')}</button><button class="btn d" onclick="del('shops','${s.id}')">${t('del')}</button></div>`).join('')||`<small>${t('nos')}</small>`;
+$('lp').innerHTML=D.prods.map(p=>{const s=D.shops.find(x=>x.id===p.shop);return `<div class="row">${th(p.img)}<span class="sp"><b>${esc(nm(p))}</b><div class="meta"><span class="tag">${p.price??''} ${esc(D.cur||'')}</span>${s?`<span class="tag">${esc(nm(s))}</span>`:''}${p.out?'<span class="tag r">⛔</span>':''}${p.rate?`<span class="tag st">${'★'.repeat(p.rate)}</span>`:''}</div></span><button class="btn e" onclick="editP('${p.id}')">${t('edit')}</button><button class="btn d" onclick="del('prods','${p.id}')">${t('del')}</button></div>`}).join('')||`<small>${t('nop')}</small>`}
+function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D)],{type:'application/json'}));a.download='data.json';a.click()}
+async function doImp(f){if(!f)return;try{const d=JSON.parse(await f.text());D={cur:'',...d,shops:d.shops||[],prods:d.prods||[]};fillCfg();await save()}catch(e){alert(t('bad'))}}
+function tg(){L=L==='ar'?'en':'ar';try{localStorage.setItem('l',L)}catch(e){}apply()}
+function apply(){document.documentElement.lang=L;document.documentElement.dir=L==='ar'?'rtl':'ltr';document.title=t('title');
+const m={h1:'h1',bi:'imp',be:'exp','h-as':'as','h-ap':'ap','h-ls':'shops','h-lp':'prods','h-cfg':'cfg',ft:'by',lb:'lang',scx:'cx',pcx:'cx',gidn:'gidn'};
+for(const k in m)$(k).textContent=t(m[k]);$('note').innerHTML=t('note');
+document.querySelectorAll('[data-l]').forEach(e=>e.textContent=t('f_'+e.dataset.l)||t(e.dataset.l));lab();draw()}
+apply();
+(async()=>{let d=await load();if(!d){try{const r=await fetch('data.json?'+Date.now());if(r.ok)d=await r.json()}catch(e){}}
+if(d)D={cur:'',...d,shops:d.shops||[],prods:d.prods||[]};fillCfg();draw()})();
+</script>
+</body>
+</html>

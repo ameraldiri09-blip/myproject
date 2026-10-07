@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>سوق الشيخ مسكين</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f4ec;--card:#fff;--ink:#1f2a26;--mut:#667069;--pri:#1f5a4a;--pri2:#14403a;--soft:#e4efe9;--acc:#b88a3b;--line:#e5e0d3;--hd:#14403a;--red:#b3412f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',system-ui,sans-serif;line-height:1.6}
+button,input,select{font-family:inherit;font-size:1rem;color:var(--ink)}
+.wrap{max-width:1100px;margin:auto;padding:0 16px}
+header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:10px;padding:10px 0}
+.brand{font-weight:800;font-size:1.2rem;color:var(--pri);cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand i{width:34px;height:34px;border-radius:10px;background:var(--pri);color:#fff;display:grid;place-items:center;font-style:normal}
+.search{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:8px 14px}
+.btn{border:1px solid var(--pri);border-radius:12px;padding:7px 14px;background:transparent;color:var(--pri);font-weight:600;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+.btn.f{background:var(--pri);color:#fff}.btn.w{width:100%;text-align:center;padding:6px}
+.hero{margin:18px 0;border-radius:22px;padding:38px 28px;color:#fff;background:linear-gradient(135deg,var(--pri2),var(--pri));position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;inset-inline-end:-50px;top:-50px;width:210px;height:210px;border-radius:50%;background:var(--acc);opacity:.22}
+.hero h1{margin:0 0 6px;font-size:2rem;font-weight:800;position:relative}.hero p{margin:0;opacity:.88;max-width:520px;position:relative}
+.tb{display:flex;gap:8px;align-items:center}.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;flex:1}
+.chip{white-space:nowrap;border:1px solid var(--line);background:var(--card);padding:6px 16px;border-radius:99px;cursor:pointer}
+.chip.on{background:var(--pri);border-color:var(--pri);color:#fff}
+select{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:6px 10px}
+h2{font-size:1.15rem;margin:24px 0 12px;color:var(--hd)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;transition:.15s;position:relative}
+.click{cursor:pointer}.click:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(31,90,74,.12)}
+.shop{padding:18px;text-align:center}
+.logo{width:76px;height:76px;border-radius:50%;margin:0 auto 10px;background:var(--soft);color:var(--pri);display:grid;place-items:center;font-size:1.8rem;font-weight:800;object-fit:cover;border:2px solid var(--line)}
+.tag{display:inline-block;font-size:.8rem;color:var(--pri);background:var(--soft);padding:1px 10px;border-radius:99px;margin:1px}
+.tag.g{background:#e3f3e6;color:#1d6b3a}.tag.r{background:#f7e4e0;color:var(--red)}
+.im{aspect-ratio:1;background:var(--soft);display:grid;place-items:center;font-size:2rem;position:relative;cursor:pointer}.im img{width:100%;height:100%;object-fit:cover}
+.bd{position:absolute;top:8px;inset-inline-start:8px;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.bg{font-size:.72rem;color:#fff;padding:0 8px;border-radius:99px;font-weight:600}.bg.o{background:#6b7566}.bg.r{background:var(--red)}.bg.n{background:var(--pri)}.bg.h{background:var(--acc)}
+.hr{position:absolute;top:8px;inset-inline-end:8px;border:0;background:rgba(255,255,255,.9);border-radius:50%;width:34px;height:34px;cursor:pointer;color:var(--red);font-size:1.1rem}
+.pb{padding:12px 14px}.pn{font-weight:600;cursor:pointer}.pp{color:var(--acc);font-weight:800;margin:2px 0 8px}.pp s{color:var(--mut);font-weight:400;font-size:.85rem}
+.ps{font-size:.8rem;color:var(--mut);cursor:pointer;margin-bottom:6px}.st{color:var(--acc)}small{color:var(--mut)}
+.empty{text-align:center;color:var(--mut);padding:40px 10px;border:2px dashed var(--line);border-radius:18px}
+.head{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:8px;flex-wrap:wrap}
+.head .logo{margin:0}.head h2{margin:0}.acts{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+#md{position:fixed;inset:0;background:rgba(20,30,25,.55);display:none;align-items:flex-end;justify-content:center;z-index:20}#md.on{display:flex}
+.mb{background:var(--card);width:100%;max-width:520px;max-height:90vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px;position:relative}
+@media(min-width:600px){#md{align-items:center}.mb{border-radius:22px}}
+.x{position:absolute;top:10px;inset-inline-end:10px;border:0;background:var(--soft);border-radius:50%;width:32px;height:32px;cursor:pointer}
+.big{width:100%;border-radius:14px;max-height:320px;object-fit:cover}.mb h3{margin:10px 0 4px}
+.ci{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}.ci .sp{flex:1}.ci button{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--card);cursor:pointer}
+.cs{border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}.ct{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px}
+.rvw{border-top:1px solid var(--line);padding:8px 0}.rf{display:grid;gap:8px;margin-top:10px}.rf input,.rf select{width:100%;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+#fab{position:fixed;inset-inline-end:16px;bottom:16px;z-index:10;display:none;align-items:center;gap:6px;background:var(--pri);color:#fff;border:0;border-radius:99px;padding:10px 18px;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+#ts{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 18px;border-radius:99px;z-index:30;display:none}
+.av{width:32px;height:32px;border-radius:50%;background:var(--soft)}
+footer{text-align:center;color:var(--mut);padding:30px 0 70px;font-size:.9rem}
+@media(max-width:560px){.hero{padding:26px 20px}.hero h1{font-size:1.5rem}.brand span{display:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap bar">
+<div class="brand" data-a="home"><i>🌿</i><span id="bt"></span></div>
+<input class="search" id="q" oninput="Q=this.value;draw()">
+<button class="btn" id="lb" data-a="lang"></button>
+<span id="ua" style="display:flex;align-items:center;gap:6px"></span>
+</div></header>
+<main class="wrap" id="app"></main>
+<footer id="ft"></footer>
+<div id="md"></div><button id="fab" data-a="cart">🛒 <span id="fbn"></span></button><div id="ts"></div>
+<script>
+const T={ar:{brand:"سوق الشيخ مسكين",h1:"كل محلات الشيخ مسكين في مكان واحد",hp:"تصفّح المحلات واكتشف المنتجات واطلب مباشرة عبر واتساب.",all:"الكل",fav:"المفضلة",shops:"المحلات",offers:"العروض",latest:"المنتجات",search:"ابحث عن منتج أو محل…",back:"→ رجوع",none:"لا توجد منتجات.",nos:"لا توجد محلات بعد.",order:"أرسل الطلب عبر واتساب",lang:"English",items:"منتج",ft:"© سوق الشيخ مسكين",by:"إعداد المهندس: عامر الديري",add:"أضف للسلة",out:"غير متوفر",new:"جديد",hot:"مميز",cart:"سلة المشتريات",cempty:"السلة فارغة",total:"المجموع",hello:"مرحبًا، أريد طلب من",share:"مشاركة",open:"مفتوح الآن",closed:"مغلق الآن",deliv:"يوجد توصيل",call:"اتصال",map:"الموقع",wa:"واتساب",s_new:"الأحدث",s_cheap:"الأرخص",s_exp:"الأغلى",rv:"تقييمات الزبائن",rn:"اسمك (اختياري)",rc:"اكتب تعليقك",send:"إرسال التقييم",thx:"شكرًا لتقييمك!",err:"حدث خطأ، حاول لاحقًا",added:"أُضيف للسلة",copied:"تم نسخ الرابط",pick:"اختر عدد النجوم",hrs:"الدوام",login:"تسجيل الدخول",logout:"خروج",lreq:"سجّل الدخول بحساب جوجل لإضافة المنتجات إلى المفضلة والسلة.",cust:"الزبون",nogid:"تسجيل الدخول غير مفعّل بعد (لم يُضَف Google Client ID).",h24:"مفتوح 24 ساعة"},
+en:{brand:"Sheikh Maskin Market",h1:"All of Sheikh Maskin's shops in one place",hp:"Browse shops, discover products and order directly on WhatsApp.",all:"All",fav:"Favorites",shops:"Shops",offers:"Offers",latest:"Products",search:"Search products or shops…",back:"← Back",none:"No products.",nos:"No shops yet.",order:"Send order on WhatsApp",lang:"العربية",items:"items",ft:"© Sheikh Maskin Market",by:"Prepared by Eng. Amer Aldiri",add:"Add to cart",out:"Out of stock",new:"New",hot:"Featured",cart:"Shopping cart",cempty:"Your cart is empty",total:"Total",hello:"Hello, I'd like to order from",share:"Share",open:"Open now",closed:"Closed now",deliv:"Delivery available",call:"Call",map:"Location",wa:"WhatsApp",s_new:"Newest",s_cheap:"Cheapest",s_exp:"Most expensive",rv:"Customer reviews",rn:"Your name (optional)",rc:"Write your comment",send:"Submit review",thx:"Thanks for your review!",err:"Something went wrong, try later",added:"Added to cart",copied:"Link copied",pick:"Choose stars",hrs:"Hours",login:"Sign in",logout:"Sign out",lreq:"Sign in with Google to add products to your favorites and cart.",cust:"Customer",nogid:"Sign-in is not enabled yet (no Google Client ID added).",h24:"Open 24 hours"}};
+const CLIENT_ID='';/* optional: paste your Google Client ID here instead of the admin page */
+const $=id=>document.getElementById(id);
+const LS={g(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let L=(()=>{try{return localStorage.getItem('l')||'ar'}catch(e){return'ar'}})(),D={cur:'',shops:[],prods:[]},Q='',CAT='',SORT='new',M=null,PR='',CART={},FAV=[],USER=LS.g('user',null),PEND=null,GREADY=false;
+function loadUser(){CART=USER?LS.g('cart:'+USER.sub,{}):{};FAV=USER?LS.g('fav:'+USER.sub,[]):[]}loadUser();
+const t=k=>T[L][k],esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nm=o=>L==='ar'?(o.n||o.e||''):(o.e||o.n||''),shopOf=id=>D.shops.find(s=>s.id===id),prodOf=id=>D.prods.find(p=>p.id===id);
+const num=v=>{if(v==null||v==='')return null;const n=typeof v==='number'?v:parseFloat(String(v).replace(/,/g,'').replace(/[^\d.]/g,''));return isNaN(n)?null:n};
+const money=v=>num(v)==null?'':num(v).toLocaleString('en-US')+(D.cur?' '+esc(D.cur):'');
+const disc=p=>num(p.old)>num(p.price)&&num(p.price)!=null?Math.round(100-num(p.price)/num(p.old)*100):0;
+const hm=x=>{const[a,b]=x.split(':');return +a*60+ +b};
+function openNow(s){if(s.h24)return true;if(!s.from||!s.to)return null;const d=new Date(),m=d.getHours()*60+d.getMinutes(),f=hm(s.from),e=hm(s.to);return f<=e?m>=f&&m<e:m>=f||m<e}
+const stars=(r,n)=>r?`<span class="st">${'★'.repeat(Math.round(r))}${'☆'.repeat(5-Math.round(r))}</span> <small>${(+r).toFixed(1)}${n?` (${n})`:''}</small>`:'';
+const rt=p=>[p.rate||0,0];
+const route=()=>decodeURIComponent(location.hash.slice(1));
+const go=h=>{location.hash=h;scrollTo(0,0)};
+let tt;function toast(m){const e=$('ts');e.textContent=m;e.style.display='block';clearTimeout(tt);tt=setTimeout(()=>e.style.display='none',1800)}
+const match=o=>{const q=Q.trim().toLowerCase();return !q||((o.n||'')+' '+(o.e||'')).toLowerCase().includes(q)};
+const logo=s=>s.logo?`<img class="logo" src="${s.logo}" alt="">`:`<div class="logo">${esc(nm(s).charAt(0))}</div>`;
+const sortL=a=>{const r=a.slice();if(SORT==='cheap')r.sort((x,y)=>(num(x.price)??1e12)-(num(y.price)??1e12));else if(SORT==='exp')r.sort((x,y)=>(num(y.price)??-1)-(num(x.price)??-1));else r.sort((x,y)=>(y.ts||0)-(x.ts||0));return r};
+const sortSel=()=>`<select onchange="SORT=this.value;draw()">${[['new','s_new'],['cheap','s_cheap'],['exp','s_exp']].map(([v,k])=>`<option value="${v}" ${SORT===v?'selected':''}>${t(k)}</option>`).join('')}</select>`;
+/* Google sign-in */
+function initGsi(){if(!GID()||window.__gl)return;window.__gl=1;const e=document.createElement('script');e.src='https://accounts.google.com/gsi/client';e.async=true;e.onload=()=>{google.accounts.id.initialize({client_id:GID(),callback:onCred,auto_select:false});GREADY=true;if(M==='login')renderGBtn()};document.head.appendChild(e)}
+function renderGBtn(){const e=$('gbtn');if(e&&GREADY)google.accounts.id.renderButton(e,{theme:'outline',size:'large',shape:'pill',locale:L})}
+function onCred(r){try{const b=r.credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),p=JSON.parse(decodeURIComponent(escape(atob(b+'='.repeat((4-b.length%4)%4)))));
+if(p.aud!==GID()||!/accounts\.google\.com$/.test(p.iss)||p.exp*1000<Date.now())throw 0;
+USER={sub:p.sub,name:p.name||p.email,email:p.email,picture:p.picture||''};LS.s('user',USER);loadUser();M=null;const pe=PEND;PEND=null;draw();if(pe)act(pe.a,pe.id)}catch(e){toast(t('err'))}}
+function logout(){try{google.accounts.id.disableAutoSelect();localStorage.removeItem('user')}catch(e){}USER=null;loadUser();M=null;draw()}
+const GID=()=>(typeof D!=='undefined'&&D.gid)||CLIENT_ID;
+const loginHtml=()=>`<h3>${t('login')}</h3><p>${t('lreq')}</p>${GID()?'':`<p><b>${t('nogid')}</b></p>`}<div id="gbtn" style="display:flex;justify-content:center;min-height:44px"></div>`;
+/* cards */
+function pcard(p){const s=shopOf(p.shop),d=disc(p),[r,n]=rt(p),fv=FAV.includes(p.id);
+return `<div class="card"><div class="im" data-a="prod" data-id="${p.id}">${p.img?`<img src="${p.img}" alt="">`:'🛍️'}<div class="bd">${p.out?`<b class="bg o">${t('out')}</b>`:''}${d?`<b class="bg r">-${d}%</b>`:''}${p.badge==='new'?`<b class="bg n">${t('new')}</b>`:''}${p.badge==='hot'?`<b class="bg h">${t('hot')}</b>`:''}</div></div><button class="hr" data-a="fav" data-id="${p.id}">${fv?'♥':'♡'}</button><div class="pb"><div class="pn" data-a="prod" data-id="${p.id}">${esc(nm(p))}</div>${stars(r,n)}<div class="pp">${money(p.price)} ${d?`<s>${money(p.old)}</s>`:''}</div>${s?`<div class="ps" data-a="shop" data-id="${s.id}">${esc(nm(s))}</div>`:''}${p.out?'':`<button class="btn f w" data-a="add" data-id="${p.id}">${t('add')}</button>`}</div></div>`}
+function ob(s){if(s.h24)return `<span class="tag g">🕒 ${t('h24')}</span>`;const o=openNow(s);return o==null?'':`<span class="tag ${o?'g':'r'}">${t(o?'open':'closed')}</span>`}
+function home(){const cats=[...new Set(D.shops.map(s=>s.cat).filter(Boolean))],fv=CAT==='★';
+const shops=fv?[]:D.shops.filter(s=>(!CAT||s.cat===CAT)&&(match(s)||D.prods.some(p=>p.shop===s.id&&match(p))));
+let pr=D.prods.filter(p=>match(p)&&(fv?FAV.includes(p.id):!CAT||(shopOf(p.shop)||{}).cat===CAT));pr=sortL(pr);if(!Q&&!CAT)pr=pr.slice(0,16);
+const off=!Q&&!CAT?D.prods.filter(p=>disc(p)&&!p.out).slice(0,6):[];
+return `<div class="hero"><h1>${t('h1')}</h1><p>${t('hp')}</p></div>
+<div class="tb"><div class="chips"><button class="chip ${CAT?'':'on'}" data-a="cat" data-id="">${t('all')}</button><button class="chip ${fv?'on':''}" data-a="cat" data-id="★">♥ ${t('fav')}</button>${cats.map(c=>`<button class="chip ${CAT===c?'on':''}" data-a="cat" data-id="${esc(c)}">${esc(c)}</button>`).join('')}</div>${sortSel()}</div>
+${fv?'':`<h2>${t('shops')}</h2>${shops.length?`<div class="grid">${shops.map(s=>`<div class="card click shop" data-a="shop" data-id="${s.id}">${logo(s)}<div class="pn">${esc(nm(s))}</div>${s.cat?`<span class="tag">${esc(s.cat)}</span>`:''}${ob(s)}<div>${stars(s.rate)}</div><div class="ps">${D.prods.filter(p=>p.shop===s.id).length} ${t('items')}</div></div>`).join('')}</div>`:`<div class="empty">${t('nos')}</div>`}`}
+${off.length?`<h2>🔥 ${t('offers')}</h2><div class="grid">${off.map(pcard).join('')}</div>`:''}
+<h2>${t('latest')}</h2>${pr.length?`<div class="grid">${pr.map(pcard).join('')}</div>`:`<div class="empty">${t('none')}</div>`}`}
+function shopPage(s){const ps=sortL(D.prods.filter(p=>p.shop===s.id&&match(p))),ph=String(s.phone||'').replace(/\D/g,'');
+return `<p><button class="btn" data-a="home">${t('back')}</button></p><div class="head">${logo(s)}<div style="flex:1"><h2>${esc(nm(s))}</h2>${s.cat?`<span class="tag">${esc(s.cat)}</span>`:''}${ob(s)}${s.deliv?`<span class="tag">🛵 ${t('deliv')}</span>`:''}<div>${stars(s.rate)}</div>${s.h24?`<small>${t('hrs')}: ${t('h24')}</small>`:s.from&&s.to?`<small>${t('hrs')}: ${esc(s.from)} - ${esc(s.to)}</small>`:''}${s.desc?`<div><small>${esc(s.desc)}</small></div>`:''}</div>
+<div class="acts">${ph?`<a class="btn" href="tel:+${ph}">📞 ${t('call')}</a><a class="btn" target="_blank" rel="noopener" href="https://wa.me/${ph}">${t('wa')}</a>`:''}${/^https?:\/\//.test(s.map||'')?`<a class="btn" target="_blank" rel="noopener" href="${esc(s.map)}">📍 ${t('map')}</a>`:''}</div></div>
+<div class="tb" style="margin-top:12px"><span class="chips"></span>${sortSel()}</div>${ps.length?`<div class="grid">${ps.map(pcard).join('')}</div>`:`<div class="empty">${t('none')}</div>`}`}
+/* modal */
+function prodModal(p){const s=shopOf(p.shop),d=disc(p),[r,n]=rt(p),fv=FAV.includes(p.id);
+return `${p.img?`<img class="big" src="${p.img}" alt="">`:''}<h3>${esc(nm(p))}</h3>${stars(r,n)}<div class="pp">${money(p.price)} ${d?`<s>${money(p.old)}</s> <b class="bg r">-${d}%</b>`:''}</div>${p.desc?`<p>${esc(p.desc)}</p>`:''}${s?`<p class="ps" data-a="shop" data-id="${s.id}">🏪 ${esc(nm(s))}</p>`:''}
+<div class="acts">${p.out?`<b class="bg o">${t('out')}</b>`:`<button class="btn f" data-a="add" data-id="${p.id}">${t('add')}</button>`}<button class="btn" data-a="fav" data-id="${p.id}">${fv?'♥':'♡'}</button><button class="btn" data-a="share" data-id="${p.id}">${t('share')}</button></div>`}
+function cartHtml(){const by={};for(const id in CART){const p=prodOf(id);if(p)(by[p.shop]=by[p.shop]||[]).push([p,CART[id]])}const ks=Object.keys(by);
+if(!ks.length)return `<p class="empty">${t('cempty')}</p>`;
+return ks.map(sid=>{const s=shopOf(sid)||{},tot=by[sid].reduce((a,[p,q])=>a+(num(p.price)||0)*q,0);
+return `<div class="cs"><b>${esc(nm(s))}</b>${by[sid].map(([p,q])=>`<div class="ci"><span class="sp">${esc(nm(p))}<br><small>${money(p.price)}</small></span><button data-a="dec" data-id="${p.id}">−</button><b>${q}</b><button data-a="inc" data-id="${p.id}">+</button></div>`).join('')}<div class="ct"><span>${t('total')}: <b>${money(tot)}</b></span>${s.phone?`<button class="btn f" data-a="order" data-id="${sid}">${t('order')}</button>`:''}</div></div>`}).join('')}
+function modal(){const r=route(),pm=r.startsWith('p/')?prodOf(r.slice(2)):null;
+const h=M==='login'?loginHtml():M==='cart'?`<h3>${t('cart')}</h3>${cartHtml()}`:pm?prodModal(pm):'';
+$('md').className=h?'on':'';$('md').innerHTML=h?`<div class="mb"><button class="x" data-a="close">✕</button>${h}</div>`:'';document.body.style.overflow=h?'hidden':'';if(M==='login')renderGBtn()}
+function fab(){const n=Object.values(CART).reduce((a,b)=>a+b,0);$('fab').style.display=n?'flex':'none';$('fbn').textContent=n}
+function draw(){document.documentElement.lang=L;document.documentElement.dir=L==='ar'?'rtl':'ltr';document.title=t('brand');
+$('bt').textContent=t('brand');$('q').placeholder=t('search');$('lb').textContent=t('lang');$('ua').innerHTML=USER?`<img class="av" src="${esc(USER.picture)}" alt="" referrerpolicy="no-referrer" title="${esc(USER.name)}"><button class="btn" data-a="logout">${t('logout')}</button>`:`<button class="btn f" data-a="login">${t('login')}</button>`;$('ft').innerHTML=esc(t('ft'))+'<br><b>'+esc(t('by'))+'</b>';
+const r=route(),y=scrollY;if(!r.startsWith('p/'))PR=r;const s=PR.startsWith('s/')?shopOf(PR.slice(2)):null;
+$('app').innerHTML=s?shopPage(s):home();if(r.startsWith('p/'))scrollTo(0,y);modal();fab()}
+const save=()=>{USER&&LS.s('cart:'+USER.sub,CART);fab();if(M==='cart')modal()};
+function order(sid){const s=shopOf(sid);let tot=0;const lines=[];for(const id in CART){const p=prodOf(id);if(p&&p.shop===sid){const q=CART[id],pr=num(p.price);tot+=(pr||0)*q;lines.push(`• ${nm(p)} × ${q}${pr!=null?' = '+(pr*q).toLocaleString('en-US')+' '+(D.cur||''):''}`)}}
+window.open('https://wa.me/'+String(s.phone).replace(/\D/g,'')+'?text='+encodeURIComponent(`${t('hello')} ${nm(s)}\n${USER?t('cust')+': '+USER.name+'\n':''}${lines.join('\n')}\n${t('total')}: ${tot.toLocaleString('en-US')} ${D.cur||''}`),'_blank')}
+function act(a,id){if(GID()&&!USER&&['fav','add','cart'].includes(a)){PEND={a,id};M='login';return draw()}switch(a){
+case'home':CAT='';Q='';$('q').value='';M=null;go('');break;
+case'shop':M=null;go('s/'+id);break;
+case'prod':go('p/'+id);break;
+case'cat':CAT=id;draw();break;
+case'lang':L=L==='ar'?'en':'ar';try{localStorage.setItem('l',L)}catch(e){}draw();break;
+case'fav':FAV=FAV.includes(id)?FAV.filter(x=>x!==id):[...FAV,id];USER&&LS.s('fav:'+USER.sub,FAV);draw();break;
+case'add':CART[id]=(CART[id]||0)+1;save();toast(t('added'));break;
+case'inc':CART[id]++;save();break;
+case'dec':if(--CART[id]<=0)delete CART[id];save();break;
+case'cart':M='cart';draw();break;
+case'order':order(id);break;
+case'share':{const u=location.href.split('#')[0]+'#p/'+id,p=prodOf(id);if(navigator.share)navigator.share({title:nm(p),url:u}).catch(()=>{});else if(navigator.clipboard){navigator.clipboard.writeText(u);toast(t('copied'))}else window.open('https://wa.me/?text='+encodeURIComponent(u));break}
+case'close':if(M==='cart'||M==='login'){M=null;PEND=null;draw()}else go(PR);break;
+case'login':M='login';draw();break;
+case'logout':logout();break}}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(el)act(el.dataset.a,el.dataset.id);else if(e.target===$('md'))act('close')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('md').className)act('close')});
+addEventListener('hashchange',draw);
+function idbGet(){return new Promise(r=>{const o=indexedDB.open('sm',1);o.onupgradeneeded=()=>o.result.createObjectStore('kv');o.onerror=()=>r(null);o.onsuccess=()=>{const g=o.result.transaction('kv').objectStore('kv').get('data');g.onsuccess=()=>r(g.result||null);g.onerror=()=>r(null)}})}
+(async()=>{draw();let d=null;
+try{const r=await fetch('data.json?'+Date.now());if(r.ok)d=await r.json()}catch(e){}
+if(!d)d=await idbGet();
+if(d){D={cur:'',...d,shops:d.shops||[],prods:d.prods||[]};for(const id in CART)if(!prodOf(id))delete CART[id];USER&&LS.s('cart:'+USER.sub,CART);initGsi();draw();
+}})();
+</script>
+</body>
+</html>
